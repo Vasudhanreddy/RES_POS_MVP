@@ -1,0 +1,450 @@
+/* restaurant-customer-app/src/styles/App.css */
+/* restaurant-customer-app/src/styles/variables.css */
+/* This file will completely replace your previous :root color definitions */
+
+
+/*
+  IMPORTANT: Ensure your :root variables in src/styles/variables.css
+  are set to the neomorphic lavender-violet palette defined previously.
+  This App.css relies on those variables heavily.
+*/
+@import'./Styles/variables.css';
+
+/* Global Body & Root Styles */
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-background-primary); /* Neomorphic base background */
+  color: var(--color-text-primary); /* Main text color */
+}
+
+#root, .App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* --- Header & Navbar --- */
+.App-header {
+  background-color: var(--color-background-primary); /* Blends with body background */
+  color: var(--color-text-primary); /* Main text color */
+  box-shadow: var(--shadow-light); /* Soft, raised shadow for header */
+  padding: 15px 30px;
+  position: sticky; /* Make header sticky */
+  top: 0;
+  z-index: 1000; /* Ensure it's above other content */
+  border-bottom-left-radius: var(--border-radius-card); /* Soft corners for sticky header */
+  border-bottom-right-radius: var(--border-radius-card);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px; /* Limit content width */
+  margin: 0 auto;
+}
+
+.nav-brand {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-brand-main); /* Your main lavender brand color */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-brand:hover {
+  color: var(--color-brand-dark); /* Darker lavender on hover */
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px; /* Spacing between nav items */
+}
+
+.nav-item {
+  color: var(--color-text-secondary); /* Muted text for nav items */
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 5px 0;
+  transition: color 0.2s ease, border-bottom 0.2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active { /* Add .active class for current page if using NavLink */
+  color: var(--color-brand-main); /* Main lavender on hover/active */
+  border-bottom: 2px solid var(--color-brand-main);
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-email {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary); /* Muted text for email */
+  opacity: 0.8;
+}
+
+/* --- Neomorphic Button Styles --- */
+.btn {
+  padding: 15px 30px; /* Generous padding for depth */
+  border-radius: var(--border-radius-button); /* Softer rounded corners */
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+  border: solid, 1px;
+  
+  /* Default Neomorphic Raised Button */
+  background-color: var(--color-background-primary);
+  box-shadow: var(--shadow-light); /* Soft raised effect */
+  color: var(--color-brand-main); /* Button text color, using main brand accent */
+}
+
+.btn:hover {
+  box-shadow: var(--shadow-dark); /* Pressed effect on hover */
+  transform: translateY(1px); /* Slight downward push */
+}
+
+.btn:active {
+  box-shadow: var(--shadow-dark); /* Keep pressed effect on active */
+  transform: translateY(1px);
+}
+
+/* Specific Button Overrides */
+.logout-btn {
+  /* Inherits base .btn styles, just override colors for specific context */
+  color: var(--color-danger); /* Soft red for logout */
+  border: 1px solid var(--color-border-neomorphic); /* Subtle border for outline effect */
+}
+
+.logout-btn:hover {
+  background-color: var(--color-background-primary); /* Keeps same background */
+  color: var(--color-danger);
+  /* Uses generic .btn:hover for shadow */
+}
+
+.google-signin-btn {
+  background-color: var(--color-brand-main); /* Strong brand accent for sign-in */
+  color: var(--color-text-on-accent); /* White text on accent background */
+  box-shadow: var(--box-shadow-flat); /* Simple, less pronounced shadow for strong accent buttons */
+}
+
+.google-signin-btn:hover {
+  background-color: var(--color-brand-dark); /* Darker brand on hover */
+  transform: translateY(-1px); /* Slight upward lift */
+  box-shadow: var(--box-shadow-flat); /* Keep flat shadow */
+}
+
+/* --- Main Content Area --- */
+.main-content {
+  flex-grow: 1; /* Takes up remaining vertical space */
+  padding: 20px 1%; /* CONFIRMED: 10% padding on left/right sides */
+  max-width: none; /* Allows content to expand for 10% padding */
+  /*margin: 20px auto; /* Center content with some top/bottom margin */
+  background-color: var(--color-background-primary); /* Main content block background */
+  border-radius: var(--border-radius-card); /* Larger rounded corners for neomorphic feel */
+  box-shadow: var(--shadow-light); /* Soft raised shadow for the whole content area */
+}
+
+/* --- Auth Prompt (for logged out or non-admin users) --- */
+.auth-prompt {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.1rem;
+  color: var(--color-text-secondary); /* Muted grey for prompts */
+}
+
+.page-content {
+  /* Basic padding for generic routes that don't have their own specific styling */
+  padding: 20px;
+}
+
+/* --- Responsive Adjustments for App.css --- */
+@media (max-width: 992px) {
+  .App-header {
+      padding: 15px 20px;
+  }
+  .navbar {
+      flex-wrap: wrap; /* Allow elements to wrap */
+      justify-content: center;
+      gap: 15px;
+  }
+  .nav-links {
+      width: 100%;
+      justify-content: center;
+      margin-top: 10px;
+  }
+  .main-content {
+      padding: 20px; /* Adjust padding back for smaller screens */
+      margin: 15px auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .App-header {
+      padding: 10px 15px;
+      border-bottom-left-radius: 0; /* Remove radius on small screens if it looks bad */
+      border-bottom-right-radius: 0;
+  }
+  .nav-brand {
+      font-size: 1.4rem;
+  }
+  .nav-item {
+      font-size: 0.9rem;
+  }
+  .btn {
+      padding: 10px 20px; /* Slightly smaller padding for buttons */
+      font-size: 0.9rem;
+  }
+  .user-email {
+      display: none; /* Hide email on very small screens */
+  }
+  .main-content {
+      padding: 15px;
+      margin: 10px auto;
+      border-radius: 0; /* Remove card radius on very small screens for full width */
+  }
+  /* restaurant-admin-app/src/styles/main.css or similar */
+
+.dashboard-container {
+  padding: var(--spacing-lg); /* Use spacing variable */
+  background-color: var(--color-background-primary);
+  min-height: 100vh;
+}
+
+.analytics-overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  padding: 0 var(--spacing-md);
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  gap: var(--spacing-sm);
+}
+
+.analytics-overview-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.time-range-filters button {
+  background-color: transparent;
+  border: none;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.time-range-filters button:hover {
+  background-color: var(--color-background-hover);
+  color: var(--color-text-primary);
+}
+
+.time-range-filters button.active {
+  background-color: var(--color-brand-light); /* Light blue background for active */
+  color: var(--color-brand-main); /* Blue text for active */
+  font-weight: 600;
+}
+
+/* Responsive adjustments for header */
+@media (max-width: 767px) {
+  .analytics-overview-header {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  .analytics-overview-header h2 {
+      margin-bottom: var(--spacing-sm);
+  }
+  .time-range-filters {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+  }
+}
+
+}
+/* --- Login Page Specific Styles --- */
+.auth-prompt.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 120px); /* Adjust based on header/footer height if present */
+  padding: var(--spacing-xl);
+  background-color: var(--color-background-primary); /* Primary background as base */
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  text-align: center;
+  max-width: 450px; /* Max width for the login box */
+  margin: var(--spacing-xl) auto; /* Center the login box */
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md); /* Soft shadow for the container */
+  border: 1px solid var(--color-border-default);
+}
+
+.login-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-brand-main); /* Use brand color for title */
+  margin-bottom: var(--spacing-lg);
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md); /* Space between form elements */
+  width: 100%; /* Take full width of parent */
+  margin-bottom: var(--spacing-lg);
+}
+
+.login-input {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--border-radius-md);
+  font-size: 1rem;
+  color: var(--color-text-primary);
+  background-color: var(--color-background-secondary); /* Secondary background for inputs */
+  box-shadow: var(--shadow-xs); /* Subtle inset shadow */
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.login-input:focus {
+  border-color: var(--color-brand-main);
+  box-shadow: var(--shadow-sm);
+  outline: none;
+}
+
+.login-btn {
+  background-color: var(--color-brand-main);
+  color: var(--color-text-on-accent);
+  border: none;
+  border-radius: var(--border-radius-button);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-md);
+  width: 100%; /* Full width */
+}
+
+.login-btn:hover {
+  background-color: var(--color-brand-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.login-btn:disabled {
+  background-color: var(--color-background-hover);
+  color: var(--color-text-light);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  margin: var(--spacing-md) 0;
+  width: 100%;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.login-divider:not(:empty)::before {
+  margin-right: .5em;
+}
+
+.login-divider:not(:empty)::after {
+  margin-left: .5em;
+}
+
+.google-signin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  background-color: #DB4437; /* Google Red */
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--border-radius-button);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-md);
+  width: 100%; /* Full width */
+}
+
+.google-signin-btn:hover {
+  background-color: #C13327; /* Darker Google Red */
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+.google-signin-btn .google-icon {
+  width: 24px;
+  height: 24px;
+  filter: invert(1); /* Invert white icon to black if it's black on a light background or vice-versa */
+}
+
+.access-info {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-lg);
+  line-height: 1.4;
+}
+
+.access-info.initial-setup {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--color-brand-dark); /* Highlight initial setup info */
+  margin-top: var(--spacing-md);
+}
+
+
+/* Responsive adjustments for Login Page */
+@media (max-width: 768px) {
+  .auth-prompt.login-page {
+    padding: var(--spacing-lg);
+    margin: var(--spacing-lg) auto;
+    min-height: auto;
+  }
+  .login-title {
+    font-size: 1.8rem;
+  }
+  .login-input, .login-btn, .google-signin-btn {
+    font-size: 0.9rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  .google-signin-btn .google-icon {
+    width: 20px;
+    height: 20px;
+  }
+  .access-info {
+    font-size: 0.75rem;
+  }
+}

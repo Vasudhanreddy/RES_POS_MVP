@@ -1,0 +1,59 @@
+/* restaurant-customer-app/src/styles/variables.css */
+/* This file is updated to match the aesthetics of the provided Order Management screenshot */
+
+:root {
+    /* --- Base Colors (Mimicking the Screenshot's look) --- */
+    --color-background-primary: #f8f9fa; /* Light grey/off-white background for the main canvas */
+    --color-background-secondary: #ffffff; /* Pure white for cards, modals, and distinct sections */
+    --color-background-hover: #f0f0f0; /* Subtle hover effect for clickable background areas */
+
+    /* --- Text Colors --- */
+    --color-text-primary: #343a40;       /* Dark grey for main text, strong headings */
+    --color-text-secondary: #6c757d;     /* Muted grey for secondary text, labels, subtle info */
+    --color-text-light: #adb5bd;         /* Very light grey for placeholders, less important details */
+    --color-text-on-accent: #ffffff;     /* White text for contrast on colored buttons/badges */
+
+    /* --- Brand & Accent Colors (Interpreted from the blue/green/orange in the screenshot) --- */
+    --color-brand-main: #007bff;         /* A vibrant blue, used for primary actions, progress bars */
+    --color-brand-dark: #0056b3;         /* Darker blue for hover states */
+    --color-brand-light: #e0f0ff;        /* Very light blue for subtle backgrounds/tags (like 'Dine-in') */
+
+    /* --- Semantic Colors (Status indicators, based on screenshot) --- */
+    --color-success: #28a745;            /* Green for 'Ready', 'Completed', 'Accepted' */
+    --color-success-light: #d4edda;     /* Lighter green for success backgrounds/badges */
+
+    --color-danger: #ff8c8c;             /* Red for 'Cancelled' */
+    --color-danger-light: #f8d7da;       /* Lighter red for danger backgrounds */
+
+    --color-warning: #ffc107;            /* Yellow/Orange for 'New Orders', 'Pending' */
+    --color-warning-light: #fff3cd;      /* Lighter yellow for warning backgrounds */
+
+    --color-info: #17a2b8;               /* Teal/Cyan for 'In Progress' / 'In Preparation' */
+    --color-info-light: #d1ecf1;         /* Lighter teal for info backgrounds */
+
+    /* --- Borders & Shadows (Soft, modern, and distinct as in screenshot) --- */
+    --color-border-default: #297cd0;     /* Light border for cards and separators */
+    --color-border-darker: #14497f;      /* Slightly darker border for active states or distinct elements */
+
+    --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Small shadow for cards */
+    --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);      /* Medium shadow for modals, hovered elements */
+    --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);       /* Large shadow for very prominent elements (e.g., initial modal) */
+
+    /* --- Border Radii --- */
+    --border-radius-sm: 0.25rem; /* 4px */
+    --border-radius-md: 0.5rem;  /* 8px */
+    --border-radius-lg: 0.75rem; /* 12px for cards */
+    --border-radius-pill: 50rem; /* For badges, making them pill-shaped */
+    --border-radius-button: 0.25rem;
+    --border-radius-card:0.2rem;
+
+    /* --- Typography --- */
+    --font-family-base: 'Inter', sans-serif; /* Or 'Roboto', 'Open Sans' as seen in modern UIs */
+
+    /* --- Spacing Scale (for consistency) --- */
+    --spacing-xs: 0.25rem; /* 4px */
+    --spacing-sm: 0.5rem;  /* 8px */
+    --spacing-md: 1rem;    /* 16px */
+    --spacing-lg: 1.5rem;  /* 24px */
+    --spacing-xl: 2rem;    /* 32px */
+}

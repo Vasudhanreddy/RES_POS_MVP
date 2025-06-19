@@ -1,0 +1,811 @@
+/* restaurant-customer-app/src/App.css */
+/* Enhanced Neomorphic Design with Glowing Shadows and Bumpy Effects */
+
+/* Define CSS Variables for Enhanced Neomorphic theming */
+:root {
+  /* Neomorphic Base Colors - slightly darker for better contrast */
+  --neo-bg-primary: #dde1e7; /* Main background */
+  --neo-bg-secondary: #dde1e7; /* Same as primary for consistency */
+  --neo-surface: #dde1e7; /* Surface color for cards and elements */
+  
+  /* Text Colors */
+  --neo-text-primary: #2d3748; /* Darker for better contrast */
+  --neo-text-secondary: #4a5568; /* Medium grey for secondary text */
+  --neo-text-accent: #1a202c; /* Very dark for emphasis */
+  
+  /* Enhanced Neomorphic Shadows with more depth */
+  --neo-shadow-light: #ffffff; /* Light shadow (highlight) */
+  --neo-shadow-dark: #9baacf; /* Darker shadow for more depth */
+  
+  /* Button and Interactive Colors with glow */
+  --neo-accent-primary: #667eea; /* Soft blue */
+  --neo-accent-secondary: #764ba2; /* Soft purple */
+  --neo-success: #48bb78; /* Soft green */
+  --neo-danger: #f56565; /* Soft red */
+  --neo-warning: #ed8936; /* Soft orange */
+  
+  /* Enhanced Neomorphic Effects - More Bumpy and Pronounced */
+  --neo-shadow-inset: inset 4px 4px 12px var(--neo-shadow-dark), 
+                      inset -4px -4px 12px var(--neo-shadow-light);
+  
+  --neo-shadow-outset: 8px 8px 16px var(--neo-shadow-dark), 
+                       -8px -8px 16px var(--neo-shadow-light);
+                       
+  --neo-shadow-pressed: inset 6px 6px 12px var(--neo-shadow-dark), 
+                        inset -6px -6px 12px var(--neo-shadow-light);
+                        
+  --neo-shadow-hover: 12px 12px 24px var(--neo-shadow-dark), 
+                      -12px -12px 24px var(--neo-shadow-light);
+  
+  /* Glowing Shadow Effects */
+  --neo-glow-primary: 0 0 20px rgba(102, 126, 234, 0.3),
+                      0 0 40px rgba(102, 126, 234, 0.1),
+                      8px 8px 16px var(--neo-shadow-dark), 
+                      -8px -8px 16px var(--neo-shadow-light);
+                      
+  --neo-glow-secondary: 0 0 15px rgba(118, 75, 162, 0.3),
+                        0 0 30px rgba(118, 75, 162, 0.1),
+                        6px 6px 12px var(--neo-shadow-dark), 
+                        -6px -6px 12px var(--neo-shadow-light);
+                        
+  --neo-glow-success: 0 0 15px rgba(72, 187, 120, 0.4),
+                      0 0 30px rgba(72, 187, 120, 0.2),
+                      6px 6px 12px var(--neo-shadow-dark), 
+                      -6px -6px 12px var(--neo-shadow-light);
+                      
+  --neo-glow-danger: 0 0 15px rgba(245, 101, 101, 0.4),
+                     0 0 30px rgba(245, 101, 101, 0.2),
+                     6px 6px 12px var(--neo-shadow-dark), 
+                     -6px -6px 12px var(--neo-shadow-light);
+  
+  /* Border Radius - More pronounced curves */
+  --neo-radius-small: 12px;
+  --neo-radius-medium: 20px;
+  --neo-radius-large: 30px;
+  --neo-radius-xl: 40px;
+  
+  /* Transitions */
+  --neo-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* General App Container */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #dde1e7 0%, #c8d0e1 50%, #dde1e7 100%);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--neo-text-primary);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Enhanced Background Pattern */
+.App::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(155, 170, 207, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 40% 60%, rgba(102, 126, 234, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Header - More Bumpy and Glowing */
+.App-header {
+  background: var(--neo-surface);
+  padding: 25px 5%;
+  box-shadow: var(--neo-glow-primary);
+  color: var(--neo-text-primary);
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 var(--neo-radius-large) var(--neo-radius-large);
+  position: relative;
+  margin: 15px 15px 0 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.App-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 50%, rgba(155, 170, 207, 0.1));
+  border-radius: 0 0 var(--neo-radius-large) var(--neo-radius-large);
+  pointer-events: none;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.restaurant-logo {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: var(--neo-shadow-outset);
+  transition: var(--neo-transition);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.restaurant-logo:hover {
+  box-shadow: var(--neo-glow-primary);
+  transform: translateY(-3px) scale(1.05);
+}
+
+.restaurant-name {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--neo-text-accent);
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8), 
+               -1px -1px 2px rgba(155, 170, 207, 0.3);
+  letter-spacing: -0.5px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Main Content Area */
+.App-main {
+  flex-grow: 1;
+  padding: 40px 20px 120px 5px;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Bottom Navigation Bar - Enhanced Bumpy Effect */
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: var(--neo-surface);
+  border-radius: var(--neo-radius-xl);
+  box-shadow: var(--neo-glow-secondary);
+  z-index: 100;
+  padding: 15px 10px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.bottom-nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 60%, rgba(155, 170, 207, 0.1));
+  border-radius: var(--neo-radius-xl);
+  pointer-events: none;
+}
+
+.bottom-nav a {
+  flex: 1;
+  text-align: center;
+  padding: 15px 10px;
+  color: var(--neo-text-secondary);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: var(--neo-transition);
+  border-radius: var(--neo-radius-medium);
+  margin: 0 5px;
+  position: relative;
+  z-index: 1;
+  background: var(--neo-surface);
+  box-shadow: var(--neo-shadow-outset);
+}
+
+.bottom-nav a:hover {
+  color: var(--neo-text-primary);
+  box-shadow: var(--neo-glow-primary);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.bottom-nav a.active {
+  color: var(--neo-accent-primary);
+  box-shadow: var(--neo-shadow-inset);
+  background: linear-gradient(145deg, rgba(102, 126, 234, 0.1), rgba(102, 126, 234, 0.05));
+  border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+/* Cart Icon - Enhanced Glow Effect */
+.cart-icon-link {
+  color: var(--neo-text-primary);
+  font-size: 1.5rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: var(--neo-transition);
+  padding: 15px 20px;
+  border-radius: var(--neo-radius-medium);
+  background: var(--neo-surface);
+  box-shadow: var(--neo-shadow-outset);
+  min-width: 60px;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cart-icon-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 50%, rgba(155, 170, 207, 0.05));
+  border-radius: var(--neo-radius-medium);
+  pointer-events: none;
+}
+
+.cart-icon-link:hover {
+  color: var(--neo-accent-primary);
+  box-shadow: var(--neo-glow-primary);
+  transform: translateY(-4px) scale(1.05);
+}
+
+.cart-icon-link:active {
+  box-shadow: var(--neo-shadow-pressed);
+  transform: translateY(-1px) scale(0.98);
+}
+
+.cart-item-count {
+  background: linear-gradient(145deg, var(--neo-danger), #e53e3e);
+  color: white;
+  border-radius: 50%;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 24px;
+  text-align: center;
+  line-height: 1.2;
+  box-shadow: var(--neo-glow-danger);
+  font-weight: 800;
+  border: 2px solid var(--neo-surface);
+}
+
+/* Auth Section */
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-info {
+  font-size: 1rem;
+  color: var(--neo-text-primary);
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+/* Enhanced Button Styles - More Bumpy */
+.btn {
+  background: var(--neo-surface);
+  color: var(--neo-text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 15px 30px;
+  border-radius: var(--neo-radius-medium);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--neo-transition);
+  font-weight: 700;
+  box-shadow: var(--neo-shadow-outset);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 50%, rgba(155, 170, 207, 0.05));
+  border-radius: var(--neo-radius-medium);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s;
+}
+
+.btn:hover::before {
+  opacity: 1;
+}
+
+.btn:hover::after {
+  left: 100%;
+}
+
+.btn:hover {
+  box-shadow: var(--neo-glow-primary);
+  transform: translateY(-4px) scale(1.02);
+  color: var(--neo-accent-primary);
+}
+
+.btn:active {
+  box-shadow: var(--neo-shadow-pressed);
+  transform: translateY(-1px) scale(0.98);
+}
+
+.btn:disabled {
+  background: #c8d0e1;
+  cursor: not-allowed;
+  box-shadow: var(--neo-shadow-inset);
+  color: var(--neo-text-secondary);
+  transform: none;
+}
+
+/* Specific Button Overrides with Enhanced Glow */
+.btn.google-signin-btn {
+  background: linear-gradient(145deg, #DB4437, #C13327);
+  color: white;
+  box-shadow: var(--neo-glow-danger);
+  border: none;
+}
+
+.btn.google-signin-btn:hover {
+  box-shadow: 0 0 25px rgba(219, 68, 55, 0.5),
+              0 0 50px rgba(219, 68, 55, 0.2),
+              12px 12px 24px var(--neo-shadow-dark), 
+              -12px -12px 24px var(--neo-shadow-light);
+  transform: translateY(-4px) scale(1.02);
+}
+.btn.logout-btn {
+  background: linear-gradient(145deg, var(--neo-danger), #e53e3e);
+  color: white;
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  box-shadow: var(--neo-glow-danger);
+  border: none;
+}
+
+.btn.logout-btn:hover {
+  box-shadow: 0 0 20px rgba(245, 101, 101, 0.6),
+              0 0 40px rgba(245, 101, 101, 0.3),
+              10px 10px 20px var(--neo-shadow-dark), 
+              -10px -10px 20px var(--neo-shadow-light);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.btn.large-btn {
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  border-radius: var(--neo-radius-large);
+  box-shadow: 10px 10px 20px var(--neo-shadow-dark), 
+              -10px -10px 20px var(--neo-shadow-light);
+}
+
+.btn.large-btn:hover {
+  box-shadow: var(--neo-glow-primary);
+  transform: translateY(-5px) scale(1.03);
+}
+
+/* Enhanced Auth Prompt */
+.auth-prompt {
+  text-align: center;
+  padding: 80px 50px;
+  background: var(--neo-surface);
+  border-radius: var(--neo-radius-xl);
+  box-shadow: var(--neo-glow-primary);
+  max-width: 900px;
+  margin: 100px auto;
+  color: var(--neo-text-primary);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.auth-prompt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 60%, rgba(155, 170, 207, 0.05));
+  border-radius: var(--neo-radius-xl);
+  pointer-events: none;
+  animation: shimmer 8s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { 
+    background: 
+      radial-gradient(circle at 30% 30%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 70% 70%, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+      linear-gradient(145deg, rgba(255, 255, 255, 0.1), transparent 60%, rgba(155, 170, 207, 0.05));
+  }
+  50% { 
+    background: 
+      radial-gradient(circle at 70% 70%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+      radial-gradient(circle at 30% 30%, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+      linear-gradient(145deg, rgba(155, 170, 207, 0.05), transparent 60%, rgba(255, 255, 255, 0.1));
+  }
+}
+
+.auth-prompt h2 {
+  font-size: 3rem;
+  margin-bottom: 25px;
+  color: var(--neo-text-accent);
+  text-shadow: 3px 3px 6px rgba(255, 255, 255, 0.8), 
+               -1px -1px 3px rgba(155, 170, 207, 0.3);
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
+}
+
+.auth-prompt p {
+  font-size: 1.3rem;
+  margin-bottom: 40px;
+  color: var(--neo-text-secondary);
+  position: relative;
+  z-index: 1;
+  line-height: 1.6;
+}
+
+/* Enhanced Loading Screen */
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #dde1e7 0%, #c8d0e1 50%, #dde1e7 100%);
+  color: var(--neo-text-primary);
+  font-size: 1.5rem;
+  position: relative;
+}
+
+.loading-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.08) 0%, transparent 50%);
+  animation: float 10s ease-in-out infinite;
+}
+
+.loading-screen h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  text-shadow: 4px 4px 8px rgba(255, 255, 255, 0.8), 
+               -2px -2px 4px rgba(155, 170, 207, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+  font-weight: 800;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes float {
+  0%, 100% { transform: rotate(0deg) translate(0px, 0px); }
+  33% { transform: rotate(120deg) translate(15px, 10px); }
+  66% { transform: rotate(240deg) translate(-10px, 15px); }
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.8; 
+    transform: scale(1.02);
+  }
+}
+
+/* Enhanced Orders Styles */
+.orders-container {
+  padding: 35px;
+  margin-bottom: 80px;
+  background: var(--neo-surface);
+  border-radius: var(--neo-radius-xl);
+  box-shadow: var(--neo-glow-secondary);
+  margin-top: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.orders-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 50%, rgba(155, 170, 207, 0.03));
+  border-radius: var(--neo-radius-xl);
+  pointer-events: none;
+}
+
+.order-card {
+  background: var(--neo-surface);
+  padding: 25px;
+  margin-bottom: 25px;
+  border-radius: var(--neo-radius-large);
+  box-shadow: var(--neo-shadow-inset);
+  transition: var(--neo-transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.order-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), transparent 60%, rgba(155, 170, 207, 0.02));
+  border-radius: var(--neo-radius-large);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.order-card:hover::before {
+  opacity: 1;
+}
+
+.order-card:hover {
+  box-shadow: var(--neo-glow-success);
+  transform: translateY(-5px) scale(1.01);
+}
+
+/* Input Field Enhancements (for forms if needed) */
+.neo-input {
+  background: var(--neo-surface);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--neo-radius-medium);
+  padding: 15px 20px;
+  font-size: 1rem;
+  color: var(--neo-text-primary);
+  box-shadow: var(--neo-shadow-inset);
+  transition: var(--neo-transition);
+  font-family: inherit;
+}
+
+.neo-input:focus {
+  outline: none;
+  box-shadow: var(--neo-glow-primary);
+  border-color: var(--neo-accent-primary);
+}
+
+.neo-input::placeholder {
+  color: var(--neo-text-secondary);
+  opacity: 0.7;
+}
+
+/* Card Components Enhancement */
+.neo-card {
+  background: var(--neo-surface);
+  border-radius: var(--neo-radius-large);
+  padding: 30px;
+  box-shadow: var(--neo-shadow-outset);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: var(--neo-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.neo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 50%, rgba(155, 170, 207, 0.03));
+  border-radius: var(--neo-radius-large);
+  pointer-events: none;
+}
+
+.neo-card:hover {
+  box-shadow: var(--neo-glow-primary);
+  transform: translateY(-3px);
+}
+
+/* Enhanced Responsive Adjustments */
+@media (max-width: 768px) {
+  :root {
+    --neo-shadow-outset: 6px 6px 12px var(--neo-shadow-dark), 
+                         -6px -6px 12px var(--neo-shadow-light);
+    --neo-shadow-hover: 8px 8px 16px var(--neo-shadow-dark), 
+                        -8px -8px 16px var(--neo-shadow-light);
+  }
+
+  .App-header {
+    padding: 20px 3%;
+    margin: 10px 10px 0 10px;
+  }
+  
+  .header-left .restaurant-name {
+    font-size: 1.6rem;
+  }
+  
+  .restaurant-logo {
+    height: 42px;
+    width: 42px;
+  }
+  
+  .bottom-nav {
+    bottom: 15px;
+    left: 15px;
+    right: 15px;
+    padding: 12px 8px;
+  }
+  
+  .bottom-nav a {
+    font-size: 0.8rem;
+    padding: 12px 8px;
+    margin: 0 3px;
+  }
+  
+  .cart-icon-link {
+    font-size: 1.3rem;
+    padding: 12px 16px;
+    min-width: 50px;
+  }
+  
+  .cart-item-count {
+    top: -3px;
+    right: -3px;
+    font-size: 0.7rem;
+    min-width: 20px;
+    padding: 3px 8px;
+  }
+  
+  .btn.logout-btn {
+    padding: 10px 18px;
+    font-size: 0.85rem;
+  }
+  
+  .auth-prompt {
+    margin: 50px 15px;
+    padding: 50px 30px;
+  }
+  
+  .auth-prompt h2 {
+    font-size: 2.2rem;
+  }
+  
+  .auth-prompt p {
+    font-size: 1.1rem;
+  }
+  
+  .loading-screen h1 {
+    font-size: 2.8rem;
+  }
+  
+  .btn {
+    padding: 12px 24px;
+  }
+  
+  .btn.large-btn {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header {
+    padding: 15px 2%;
+    margin: 8px 8px 0 8px;
+  }
+  
+  .header-left .restaurant-name {
+    font-size: 1.4rem;
+  }
+  
+  .restaurant-logo {
+    height: 38px;
+    width: 38px;
+  }
+  
+  .bottom-nav {
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 10px 6px;
+  }
+  
+  .bottom-nav a {
+    font-size: 0.75rem;
+    padding: 10px 6px;
+    margin: 0 2px;
+  }
+  
+  .auth-prompt {
+    margin: 30px 10px;
+    padding: 40px 20px;
+  }
+  
+  .auth-prompt h2 {
+    font-size: 1.8rem;
+  }
+  
+  .orders-container {
+    padding: 25px;
+  }
+  
+  .order-card {
+    padding: 20px;
+  }
+}
+
+/* Additional animations for enhanced visual appeal */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: var(--neo-shadow-outset);
+  }
+  50% {
+    box-shadow: var(--neo-glow-primary);
+  }
+}
+
+.neo-animate-glow {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Utility classes for consistent neomorphic styling */
+.neo-surface {
+  background: var(--neo-surface);
+  box-shadow: var(--neo-shadow-outset);
+  border-radius: var(--neo-radius-medium);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.neo-inset {
+  box-shadow: var(--neo-shadow-inset);
+}
+
+.neo-pressed {
+  box-shadow: var(--neo-shadow-pressed);
+}

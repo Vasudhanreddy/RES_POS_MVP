@@ -1,0 +1,879 @@
+/* restaurant-customer-app/src/components/OrderDetails.css */
+/* Enhanced Neomorphic Order Details Design */
+
+.order-details-container {
+    padding: 40px;
+    max-width: 800px;
+    margin: 40px auto;
+    background: var(--neo-surface);
+    border-radius: var(--neo-radius-xl);
+    box-shadow: var(--neo-glow-primary);
+    color: var(--neo-text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .order-details-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 60%, rgba(155, 170, 207, 0.03));
+    border-radius: var(--neo-radius-xl);
+    pointer-events: none;
+  }
+  
+  .order-details-container h2 {
+    color: var(--neo-text-accent);
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-shadow: 3px 3px 6px rgba(255, 255, 255, 0.8), 
+                 -1px -1px 3px rgba(155, 170, 207, 0.3);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .order-details-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--neo-accent-primary), var(--neo-accent-secondary));
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+  }
+  
+  .order-details-container h3 {
+    color: var(--neo-text-accent);
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8), 
+                 -1px -1px 2px rgba(155, 170, 207, 0.3);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .order-details-container h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--neo-accent-primary), var(--neo-accent-secondary));
+    border-radius: 2px;
+    box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+  }
+  
+  .detail-section {
+    margin-bottom: 30px;
+    background: var(--neo-surface);
+    border-radius: var(--neo-radius-large);
+    padding: 25px;
+    box-shadow: var(--neo-shadow-inset);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  .detail-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), transparent 70%, rgba(155, 170, 207, 0.01));
+    border-radius: var(--neo-radius-large);
+    pointer-events: none;
+  }
+  
+  .detail-section:hover {
+    box-shadow: var(--neo-shadow-outset);
+    transform: translateY(-2px);
+    transition: var(--neo-transition);
+  }
+  
+  .detail-section p {
+    margin: 8px 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--neo-text-secondary);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .detail-section p strong {
+    color: var(--neo-text-accent);
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+  }
+  
+  /* Enhanced Order Status Badge */
+  .order-status-badge {
+    padding: 12px 20px;
+    border-radius: var(--neo-radius-large);
+    font-weight: 800;
+    font-size: 1rem;
+    color: white;
+    display: inline-block;
+    margin-left: 15px;
+    text-transform: capitalize;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--neo-shadow-outset);
+    transition: var(--neo-transition);
+  }
+  
+  .order-status-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+  }
+  
+  .order-status-badge:hover::before {
+    left: 100%;
+  }
+  
+  /* Enhanced Status Badge Colors with Glowing Effects */
+  .order-status-badge.status-pending {
+    background: linear-gradient(145deg, var(--neo-warning), #f6ad55);
+    box-shadow: 0 0 20px rgba(237, 139, 54, 0.5),
+                0 0 40px rgba(237, 139, 54, 0.2),
+                var(--neo-shadow-outset);
+    animation: status-glow-warning 3s ease-in-out infinite;
+  }
+  
+  .order-status-badge.status-preparing {
+    background: linear-gradient(145deg, #4fd1c7, #38b2ac);
+    box-shadow: 0 0 20px rgba(56, 178, 172, 0.5),
+                0 0 40px rgba(56, 178, 172, 0.2),
+                var(--neo-shadow-outset);
+    animation: status-glow-info 3s ease-in-out infinite;
+  }
+  
+  .order-status-badge.status-ready-for-pickup,
+  .order-status-badge.status-out-for-delivery {
+    background: linear-gradient(145deg, var(--neo-accent-primary), #5a67d8);
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.5),
+                0 0 40px rgba(102, 126, 234, 0.2),
+                var(--neo-shadow-outset);
+    animation: status-glow-primary 3s ease-in-out infinite;
+  }
+  
+  .order-status-badge.status-completed {
+    background: linear-gradient(145deg, var(--neo-success), #38a169);
+    box-shadow: 0 0 20px rgba(72, 187, 120, 0.5),
+                0 0 40px rgba(72, 187, 120, 0.2),
+                var(--neo-shadow-outset);
+    animation: status-glow-success 3s ease-in-out infinite;
+  }
+  
+  .order-status-badge.status-cancelled,
+  .order-status-badge.status-refunded {
+    background: linear-gradient(145deg, var(--neo-danger), #e53e3e);
+    box-shadow: 0 0 20px rgba(245, 101, 101, 0.5),
+                0 0 40px rgba(245, 101, 101, 0.2),
+                var(--neo-shadow-outset);
+  }
+  
+  /* Status Badge Glow Animations */
+  @keyframes status-glow-warning {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(237, 139, 54, 0.5),
+                  0 0 40px rgba(237, 139, 54, 0.2),
+                  var(--neo-shadow-outset);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(237, 139, 54, 0.7),
+                  0 0 60px rgba(237, 139, 54, 0.4),
+                  var(--neo-shadow-hover);
+    }
+  }
+  
+  @keyframes status-glow-info {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(56, 178, 172, 0.5),
+                  0 0 40px rgba(56, 178, 172, 0.2),
+                  var(--neo-shadow-outset);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(56, 178, 172, 0.7),
+                  0 0 60px rgba(56, 178, 172, 0.4),
+                  var(--neo-shadow-hover);
+    }
+  }
+  
+  @keyframes status-glow-primary {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.5),
+                  0 0 40px rgba(102, 126, 234, 0.2),
+                  var(--neo-shadow-outset);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(102, 126, 234, 0.7),
+                  0 0 60px rgba(102, 126, 234, 0.4),
+                  var(--neo-shadow-hover);
+    }
+  }
+  
+  @keyframes status-glow-success {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(72, 187, 120, 0.5),
+                  0 0 40px rgba(72, 187, 120, 0.2),
+                  var(--neo-shadow-outset);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(72, 187, 120, 0.7),
+                  0 0 60px rgba(72, 187, 120, 0.4),
+                  var(--neo-shadow-hover);
+    }
+  }
+  
+  /* Enhanced Ordered Items List */
+  .ordered-items-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    background: var(--neo-surface);
+    border-radius: var(--neo-radius-large);
+    box-shadow: var(--neo-shadow-inset);
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .ordered-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 2px dashed rgba(155, 170, 207, 0.3);
+    font-size: 1.1rem;
+    transition: var(--neo-transition);
+    position: relative;
+  }
+  
+  .ordered-item::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+    border-radius: 1px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .ordered-item:hover::before {
+    opacity: 1;
+  }
+  
+  .ordered-item:hover {
+    color: var(--neo-text-accent);
+    transform: translateX(5px);
+  }
+  
+  .ordered-item:last-child {
+    border-bottom: none;
+  }
+  
+  .ordered-item .item-name {
+    flex: 1;
+    font-weight: 600;
+    color: var(--neo-text-primary);
+  }
+  
+  .ordered-item .item-quantity {
+    margin: 0 15px;
+    color: var(--neo-text-secondary);
+    font-weight: 500;
+  }
+  
+  .ordered-item .item-price {
+    font-weight: 700;
+    color: var(--neo-accent-primary);
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+  }
+  
+  /* Enhanced Back Button */
+  .back-button {
+    background: var(--neo-surface);
+    color: var(--neo-text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 15px 25px;
+    border-radius: var(--neo-radius-large);
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--neo-transition);
+    box-shadow: var(--neo-shadow-outset);
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+  
+  .back-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), transparent 50%, rgba(155, 170, 207, 0.03));
+    border-radius: var(--neo-radius-large);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .back-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s;
+  }
+  
+  .back-button:hover::before {
+    opacity: 1;
+  }
+  
+  .back-button:hover::after {
+    left: 100%;
+  }
+  
+  .back-button:hover {
+    color: var(--neo-accent-primary);
+    box-shadow: var(--neo-glow-primary);
+    transform: translateY(-3px) scale(1.02);
+  }
+  
+  .back-button:active {
+    box-shadow: var(--neo-shadow-pressed);
+    transform: translateY(-1px) scale(0.98);
+  }
+  
+  .back-button .back-icon {
+    font-size: 1.3rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .back-button:hover .back-icon {
+    transform: translateX(-3px);
+  }
+  
+  /* Enhanced Loading State */
+  .order-details-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+  }
+  
+  .detail-skeleton {
+    background: var(--neo-surface);
+    border-radius: var(--neo-radius-large);
+    box-shadow: var(--neo-shadow-inset);
+    height: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .detail-skeleton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: skeleton-loading 1.5s infinite;
+  }
+  
+  @keyframes skeleton-loading {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+  
+  /* Order Timeline (if needed) */
+  .order-timeline {
+    background: var(--neo-surface);
+    border-radius: var(--neo-radius-large);
+    padding: 25px;
+    box-shadow: var(--neo-shadow-inset);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 30px 0;
+  }
+  
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    position: relative;
+  }
+  .timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50px;
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--neo-accent-primary), transparent);
+    border-radius: 1px;
+  }
+  
+  .timeline-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--neo-accent-primary), #5a67d8);
+    box-shadow: var(--neo-shadow-outset);
+    margin-right: 20px;
+    flex-shrink: 0;
+  }
+  
+  .timeline-dot.completed {
+    background: linear-gradient(145deg, var(--neo-success), #38a169);
+    box-shadow: 0 0 15px rgba(72, 187, 120, 0.5);
+  }
+  
+  .timeline-dot.current {
+    animation: timeline-pulse 2s infinite;
+  }
+  
+  @keyframes timeline-pulse {
+    0%, 100% {
+      box-shadow: var(--neo-shadow-outset);
+    }
+    50% {
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.6),
+                  0 0 40px rgba(102, 126, 234, 0.3),
+                  var(--neo-shadow-outset);
+    }
+  }
+  
+  .timeline-content {
+    flex: 1;
+    color: var(--neo-text-primary);
+    font-weight: 600;
+  }
+  
+  .timeline-time {
+    font-size: 0.9rem;
+    color: var(--neo-text-secondary);
+    margin-top: 5px;
+  }
+  
+  /* Order Total Section Enhancement */
+  .order-total-section {
+    background: var(--neo-surface);
+    border-radius: var(--neo-radius-large);
+    padding: 25px;
+    box-shadow: var(--neo-glow-success);
+    border: 2px solid rgba(72, 187, 120, 0.3);
+    margin: 30px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .order-total-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(72, 187, 120, 0.05), transparent 60%, rgba(72, 187, 120, 0.02));
+    border-radius: var(--neo-radius-large);
+    pointer-events: none;
+  }
+  
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .total-row.final-total {
+    border-top: 2px solid rgba(72, 187, 120, 0.3);
+    margin-top: 15px;
+    padding-top: 15px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--neo-text-accent);
+  }
+  
+  .total-row .label {
+    color: var(--neo-text-primary);
+    font-weight: 600;
+  }
+  
+  .total-row .amount {
+    color: var(--neo-success);
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+  }
+  
+  /* Customer Info Section */
+  .customer-info-section {
+    background: var(--neo-surface);
+    border-radius: var(--neo-radius-large);
+    padding: 25px;
+    box-shadow: var(--neo-shadow-inset);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 30px 0;
+  }
+  
+  .customer-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(155, 170, 207, 0.3);
+  }
+  
+  .customer-info-row:last-child {
+    border-bottom: none;
+  }
+  
+  .customer-info-label {
+    color: var(--neo-text-primary);
+    font-weight: 600;
+    min-width: 120px;
+  }
+  
+  .customer-info-value {
+    color: var(--neo-text-secondary);
+    font-weight: 500;
+    text-align: right;
+  }
+  
+  /* Print Button (if needed) */
+  .print-button {
+    background: var(--neo-surface);
+    color: var(--neo-text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 20px;
+    border-radius: var(--neo-radius-medium);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: var(--neo-shadow-outset);
+    transition: var(--neo-transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 15px;
+  }
+  
+  .print-button:hover {
+    box-shadow: var(--neo-glow-secondary);
+    transform: translateY(-2px);
+    color: var(--neo-accent-secondary);
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .order-details-container {
+      margin: 20px 15px;
+      padding: 25px;
+    }
+    
+    .order-details-container h2 {
+      font-size: 2rem;
+      margin-bottom: 25px;
+    }
+    
+    .order-details-container h2::after {
+      width: 80px;
+      height: 3px;
+    }
+    
+    .order-details-container h3 {
+      font-size: 1.4rem;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      padding-bottom: 12px;
+    }
+    
+    .order-details-container h3::after {
+      width: 50px;
+      height: 2px;
+    }
+    
+    .detail-section {
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+    
+    .detail-section p {
+      font-size: 1rem;
+    }
+    
+    .order-status-badge {
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      display: block;
+      margin-left: 0;
+      margin-top: 10px;
+      text-align: center;
+    }
+    
+    .ordered-items-list {
+      padding: 15px;
+    }
+    
+    .ordered-item {
+      padding: 12px 0;
+      font-size: 1rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    
+    .ordered-item .item-quantity {
+      margin: 0;
+    }
+    
+    .back-button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      margin-bottom: 25px;
+    }
+    
+    .order-total-section,
+    .customer-info-section {
+      padding: 20px;
+    }
+    
+    .total-row {
+      font-size: 1rem;
+    }
+    
+    .total-row.final-total {
+      font-size: 1.2rem;
+    }
+    
+    .timeline-item {
+      padding: 12px 0;
+    }
+    
+    .timeline-content {
+      font-size: 0.95rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .order-details-container {
+      margin: 15px 10px;
+      padding: 20px;
+    }
+    
+    .order-details-container h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    
+    .order-details-container h2::after {
+      width: 60px;
+      height: 2px;
+    }
+    
+    .order-details-container h3 {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+    }
+    
+    .order-details-container h3::after {
+      width: 40px;
+      height: 2px;
+    }
+    
+    .detail-section {
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .detail-section p {
+      font-size: 0.95rem;
+    }
+    
+    .order-status-badge {
+      padding: 8px 14px;
+      font-size: 0.85rem;
+    }
+    
+    .ordered-items-list {
+      padding: 12px;
+    }
+    
+    .ordered-item {
+      padding: 10px 0;
+      font-size: 0.9rem;
+    }
+    
+    .back-button {
+      padding: 10px 16px;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+    
+    .back-button .back-icon {
+      font-size: 1.1rem;
+    }
+    
+    .order-total-section,
+    .customer-info-section {
+      padding: 15px;
+    }
+    
+    .total-row {
+      font-size: 0.95rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    
+    .total-row.final-total {
+      font-size: 1.1rem;
+    }
+    
+    .customer-info-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    
+    .customer-info-label {
+      min-width: unset;
+    }
+    
+    .customer-info-value {
+      text-align: left;
+    }
+  }
+  
+  /* Print Styles */
+  @media print {
+    .order-details-container {
+      box-shadow: none;
+      border: 1px solid #ccc;
+      background: white;
+      margin: 0;
+      padding: 20px;
+    }
+    
+    .back-button,
+    .print-button {
+      display: none;
+    }
+    
+    .detail-section {
+      box-shadow: none;
+      border: 1px solid #ddd;
+      break-inside: avoid;
+    }
+    
+    .order-status-badge {
+      box-shadow: none;
+      animation: none !important;
+    }
+    
+    .order-details-container::before,
+    .detail-section::before,
+    .order-total-section::before {
+      display: none;
+    }
+  }
+  
+  /* Accessibility Enhancements */
+  .back-button:focus,
+  .print-button:focus {
+    outline: 3px solid var(--neo-accent-primary);
+    outline-offset: 2px;
+  }
+  
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    .order-status-badge,
+    .timeline-dot,
+    .back-button,
+    .detail-section {
+      animation: none !important;
+      transition: none !important;
+    }
+    
+    .back-button:hover,
+    .detail-section:hover {
+      transform: none;
+    }
+  }
+  
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    .detail-section,
+    .order-total-section,
+    .customer-info-section {
+      border: 2px solid;
+    }
+    
+    .order-status-badge {
+      border: 2px solid currentColor;
+    }
+  }
+  
+  /* Special animations for order completion */
+  .order-completed-animation {
+    animation: celebration 2s ease-in-out;
+  }
+  
+  @keyframes celebration {
+    0%, 100% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(1.02) rotate(1deg);
+    }
+    50% {
+      transform: scale(1.01) rotate(-1deg);
+    }
+    75% {
+      transform: scale(1.02) rotate(1deg);
+    }
+  }

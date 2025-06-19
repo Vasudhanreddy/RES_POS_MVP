@@ -1,0 +1,369 @@
+/* restaurant-admin-app/src/components/AdminOrderInvoice.css */
+
+.invoice-page-container {
+    padding: var(--spacing-lg);
+    max-width: 900px;
+    margin: var(--spacing-xl) auto;
+    font-family: var(--font-family-base);
+    color: var(--color-text-primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content */
+  }
+
+  /* Loading and Error States */
+  .invoice-wrapper.loading,
+  .invoice-wrapper.error {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-background-primary);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    width: 100%;
+  }
+
+  .invoice-wrapper .spinner-icon {
+    font-size: 3rem;
+    color: var(--color-brand-main);
+    animation: spin 1.5s linear infinite;
+    margin-bottom: var(--spacing-md);
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .invoice-wrapper.error {
+    color: var(--color-danger);
+    font-weight: 600;
+  }
+
+  /* Invoice Actions Bar */
+  .invoice-actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Match invoice wrapper width for alignment */
+    margin-bottom: var(--spacing-md);
+    gap: var(--spacing-md);
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+  }
+
+  .invoice-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+
+  .invoice-back-button {
+    background-color: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    color: var(--color-text-secondary);
+    padding: 10px 15px;
+    border-radius: var(--border-radius-button);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  .invoice-back-button:hover {
+    background-color: var(--color-background-hover);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  .action-button.print-button,
+  .action-button.download-button {
+    background-color: var(--color-brand-main);
+    color: var(--color-text-on-accent);
+    border: none;
+    padding: 10px 15px;
+    border-radius: var(--border-radius-button);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  .action-button.print-button:hover,
+  .action-button.download-button:hover {
+    background-color: var(--color-brand-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .action-button:disabled {
+    background-color: var(--color-background-hover);
+    color: var(--color-text-light);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .action-button .small-spinner {
+    font-size: 1rem;
+    color: var(--color-text-on-accent);
+    animation: spin 1.5s linear infinite;
+  }
+
+
+  /* Invoice Wrapper (the content to be printed/downloaded) */
+  .invoice-wrapper {
+    background-color: #ffffff; /* White background for the invoice itself */
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg); /* More prominent shadow for the invoice */
+    padding: var(--spacing-xl) var(--spacing-2xl); /* More padding for invoice content */
+    width: 90%;
+    max-width: 800px;
+    box-sizing: border-box; /* Include padding in width */
+    text-align: left;
+  }
+
+  /* Invoice Header Layout - Using Grid for better control */
+  .invoice-header {
+    display: grid;
+    /* Define 3 columns: Left (restaurant info), Center (title), Right (invoice meta) */
+    grid-template-columns: 1fr auto 1fr; /* Flexible left/right, auto for center title */
+    align-items: center; /* Vertically align items in the center */
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 2px solid var(--color-brand-main); /* Stronger border */
+    margin-bottom: var(--spacing-lg);
+    gap: var(--spacing-md); /* Space between grid items */
+  }
+
+  .invoice-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem); /* Responsive font size */
+    color: var(--color-brand-main);
+    margin: 0;
+    text-align: center;
+    grid-column: 2; /* Place in the second column */
+  }
+
+  .restaurant-info {
+    grid-column: 1; /* Place in the first column */
+    margin-top: 0; /* Remove extra margin from previous flexbox */
+    padding-right: 0; /* Remove padding from previous flexbox */
+  }
+
+  .restaurant-info h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text-primary);
+  }
+
+  .restaurant-info p {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    margin: 2px 0;
+  }
+
+  .invoice-meta {
+    grid-column: 3; /* Place in the third column */
+    text-align: right;
+    margin-top: 0; /* Remove extra margin from previous flexbox */
+    padding-left: 0; /* Remove padding from previous flexbox */
+  }
+
+  .invoice-meta p {
+    font-size: 0.9rem;
+    margin: 2px 0;
+    color: var(--color-text-primary);
+  }
+
+  .invoice-details {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px dashed var(--color-border-default);
+  }
+
+  .customer-info, .order-summary-details {
+    flex-basis: 48%; /* Adjust width for two columns */
+    min-width: 280px; /* Minimum width before wrapping */
+    margin-bottom: var(--spacing-md); /* Space when wrapped */
+  }
+
+  .invoice-details h3 {
+    font-size: 1.2rem;
+    color: var(--color-brand-main);
+    margin-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border-light);
+    padding-bottom: var(--spacing-xs);
+  }
+
+  .customer-info p, .order-summary-details p {
+    font-size: 0.95rem;
+    margin: 5px 0;
+    color: var(--color-text-secondary);
+  }
+
+  .order-type-badge, .payment-status-badge, .order-status-invoice {
+    padding: 4px 8px;
+    border-radius: var(--border-radius-pill);
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: capitalize;
+    display: inline-block;
+    margin-top: var(--spacing-xs);
+  }
+
+  .order-type-badge { background-color: var(--color-info-light); color: var(--color-info); }
+  .payment-status-badge { background-color: var(--color-success-light); color: var(--color-success); }
+
+  /* Order status specific colors (similar to dashboard) */
+  .order-status-invoice.status-pending { background-color: var(--color-warning); color: var(--color-text-on-accent); }
+  .order-status-invoice.status-preparing { background-color: var(--color-info); color: var(--color-text-on-accent); }
+  .order-status-invoice.status-ready-for-pickup,
+  .order-status-invoice.status-out-for-delivery { background-color: var(--color-brand-main); color: var(--color-text-on-accent); }
+  .order-status-invoice.status-completed { background-color: var(--color-success); color: var(--color-text-on-accent); }
+  .order-status-invoice.status-cancelled,
+  .order-status-invoice.status-refunded {
+    background-color: #dc3545; /* Explicit Red for Danger */
+    color: #FFFFFF; /* Explicit White text for contrast */
+    padding: 6px 10px; /* Slightly larger padding */
+    font-size: 0.9em; /* Slightly larger font size */
+    min-width: 80px; /* Ensure minimum width to hold text */
+    text-align: center; /* Center the text within the badge */
+  }
+
+
+  .invoice-items table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .invoice-items th, .invoice-items td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border-default);
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  .invoice-items th {
+    background-color: var(--color-background-secondary);
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .invoice-items td {
+    color: var(--color-text-secondary);
+  }
+
+  .invoice-summary {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* Align summary to the right */
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .invoice-summary table {
+    width: 100%;
+    max-width: 300px; /* Control summary table width */
+    border-collapse: collapse;
+  }
+
+  .invoice-summary td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    border-bottom: 1px dashed var(--color-border-default);
+  }
+
+  .invoice-summary td:first-child {
+    font-weight: 500;
+  }
+
+  .invoice-summary td:last-child {
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .invoice-summary .grand-total td {
+    border-top: 2px solid var(--color-brand-main);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-brand-main);
+  }
+
+  .invoice-summary .grand-total td:first-child {
+      color: var(--color-text-primary); /* Keep label color */
+  }
+
+
+  .invoice-footer {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-default);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .invoice-page-container {
+      padding: var(--spacing-md);
+    }
+    .invoice-actions-bar {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .invoice-actions {
+      width: 100%;
+      justify-content: space-around;
+    }
+    .invoice-back-button, .action-button.print-button, .action-button.download-button {
+      width: 100%;
+      justify-content: center;
+    }
+    .invoice-wrapper {
+      padding: var(--spacing-lg);
+    }
+
+    /* Stack header elements on small screens */
+    .invoice-header {
+      grid-template-columns: 1fr; /* Single column */
+      text-align: center;
+      gap: var(--spacing-sm);
+    }
+    .invoice-header h1 {
+      grid-column: auto; /* Revert grid column */
+      font-size: 2rem; /* Keep a readable size on mobile */
+    }
+    .restaurant-info, .invoice-meta {
+      grid-column: auto; /* Revert grid column */
+      text-align: center;
+    }
+
+    .invoice-details {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .customer-info, .order-summary-details {
+      flex-basis: 100%;
+      min-width: unset;
+    }
+    .invoice-summary {
+      justify-content: center;
+    }
+    .invoice-summary table {
+      max-width: 100%;
+    }
+  }

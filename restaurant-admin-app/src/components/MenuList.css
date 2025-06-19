@@ -1,0 +1,569 @@
+/* restaurant-admin-app/src/components/MenuList.css */
+
+/*
+  IMPORTANT: Ensure your :root variables in src/styles/variables.css
+  are set to the neomorphic lavender-violet palette defined previously.
+  This MenuList.css relies on those variables heavily.
+*/
+
+/* Main container uses GRID for precise side-by-side placement */
+.menu-list-container {
+    display: grid;
+    /* Define two columns: 3 parts for items, 1 part for add item.
+       This gives a 75%/25% split (3/4 and 1/4) of the available space *within this container*. */
+    grid-template-columns: 3fr 1fr;
+    gap: var(--spacing-lg); /* Using spacing variable */
+    min-height: calc(100vh - 200px); /* Adjust min-height as needed */
+    color: var(--color-text-primary); /* Main text color */
+}
+
+/* The overall page title, relative to the App.js .main-content */
+.menu-page-title {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    text-align: center;
+    color: var(--color-text-primary); /* Main text color */
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xl); /* Using spacing variable */
+    padding-top: 0;
+}
+
+
+/* --- Menu Items Display (Left Section - 75% equivalent) --- */
+.menu-items-display {
+    padding-bottom: var(--spacing-md); /* Using spacing variable */
+    position: relative;
+    z-index: 1;
+}
+
+.menu-items-display h3 { /* Sub-heading for the item list itself */
+    color: var(--color-text-primary); /* Main text color */
+    margin-bottom: var(--spacing-lg); /* Using spacing variable */
+    text-align: left;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.menu-filters {
+    margin-bottom: var(--spacing-lg); /* Using spacing variable */
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md); /* Using spacing variable */
+    align-items: center;
+}
+
+.menu-filters select,
+.menu-filters input[type="text"] {
+    padding: 12px 18px; /* Specific padding */
+    border: none; /* No border for neomorphic */
+    border-radius: var(--border-radius-button); /* Match button radius */
+    font-size: 1rem;
+    color: var(--color-text-primary); /* Main text color */
+    background-color: var(--color-background-primary); /* Changed to primary background */
+    box-shadow: var(--shadow-sm); /* Using small shadow for inset effect */
+    transition: box-shadow 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
+}
+
+.menu-filters select:focus,
+.menu-filters input[type="text"]:focus {
+    border: 1px solid var(--color-brand-main); /* Highlight with brand color on focus */
+    outline: none;
+    box-shadow: var(--shadow-md), 0 0 0 2px var(--color-brand-main); /* Stronger shadow on focus */
+    transform: translateY(1px); /* Subtle press effect on focus */
+}
+
+/* --- Menu Items Grid (3 items in a row within its column) --- */
+.menu-items-grid {
+    display: grid;
+    /* Adjusted minmax for smaller cards, targeting ~180px width */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--spacing-lg); /* Using spacing variable */
+    justify-content: center; /* Center items in the grid */
+}
+
+/* --- Menu Item Card Styling (Adjusted for 150x150 image and compact card) --- */
+.menu-item-card {
+    background-color: var(--color-background-secondary); /* Card background (white) */
+    border: 1px solid var(--color-border-default); /* Using default border */
+    border-radius: var(--border-radius-lg); /* Soft rounded corners */
+    padding: var(--spacing-sm); /* Reduced padding for compactness */
+    box-shadow: var(--shadow-sm); /* Light shadow */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center; /* Center content within card */
+    width: 180px; /* Fixed width for card (150px image + padding) */
+    min-height: unset; /* Remove min-height to allow content to dictate height */
+    overflow: hidden; /* Ensure content doesn't spill out */
+}
+
+.menu-item-card:hover {
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: var(--shadow-md); /* Stronger shadow on hover */
+}
+
+.item-image-container {
+    width: 100%; /* Make container take full width of card's padding */
+    height: 150px; /* Fixed height for image container to make images 150x150 */
+    overflow: hidden;
+    border-radius: var(--border-radius-sm); /* Slightly softer image corners */
+    margin-bottom: var(--spacing-sm); /* Using spacing variable */
+    background-color: var(--color-background-primary); /* Subtle background for image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow-sm); /* Using small shadow for image container */
+}
+
+.item-image-container img {
+    width: 100%; /* Make image fill its container */
+    height: 100%; /* Make image fill its container */
+    object-fit: cover; /* Cover the area, cropping if necessary */
+    display: block;
+    border-radius: var(--border-radius-sm);
+}
+
+.item-details {
+    flex-grow: 1; /* Allow details to take available space */
+    margin-bottom: var(--spacing-sm); /* Using spacing variable */
+    padding: 0 var(--spacing-xs); /* Small horizontal padding for text within details */
+}
+
+.item-details h4 {
+    color: var(--color-text-primary);
+    margin-top: 0;
+    margin-bottom: var(--spacing-xs); /* Using spacing variable */
+    font-size: 1.1rem; /* Slightly smaller font for compactness */
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.item-description {
+    color: var(--color-text-secondary);
+    font-size: 0.8rem; /* Smaller font for description */
+    margin-bottom: var(--spacing-sm); /* Using spacing variable */
+    height: 3em; /* Limit description to 2-3 lines for compactness */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.item-price {
+    font-weight: bold;
+    color: var(--color-brand-main);
+    font-size: 1.15rem; /* Slightly smaller font for price */
+    margin-bottom: var(--spacing-xs); /* Using spacing variable */
+    padding-top: var(--spacing-sm); /* Using spacing variable */
+    border-top: 1px dashed var(--color-border-default); /* Using default border color */
+}
+
+.item-category {
+    font-size: 0.85em;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xs); /* Using spacing variable */
+}
+
+.item-availability {
+    font-weight: bold;
+    font-size: 0.85em; /* Slightly smaller font */
+    padding: var(--spacing-xs) var(--spacing-sm); /* Using spacing variable */
+    border-radius: var(--border-radius-pill); /* Pill shape */
+    display: inline-block;
+    margin-top: var(--spacing-sm); /* Using spacing variable */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.available {
+    background-color: var(--color-success-light); /* Using semantic light success color */
+    color: var(--color-success); /* Using semantic success color */
+}
+
+.unavailable {
+    background-color: var(--color-danger-light); /* Using semantic light danger color */
+    color: var(--color-danger); /* Using semantic danger color */
+}
+
+.menu-loading, .menu-error {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--color-text-secondary);
+    padding: var(--spacing-xl); /* Using spacing variable */
+}
+
+.menu-error {
+    color: var(--color-danger);
+}
+
+/* --- Item Action Buttons (Edit/Delete/Toggle Availability) --- */
+.item-actions {
+    display: flex;
+    gap: var(--spacing-sm); /* Using spacing variable */
+    margin-top: var(--spacing-sm); /* Using spacing variable */
+    padding-top: var(--spacing-sm); /* Using spacing variable */
+    border-top: 1px solid var(--color-border-default); /* Using default border color */
+    justify-content: center; /* Center buttons below image */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller cards */
+}
+
+.item-actions button {
+    padding: var(--spacing-sm) var(--spacing-md); /* Using spacing variables */
+    border: 1px solid var(--color-border-default); /* Added border for clarity */
+    border-radius: var(--border-radius-button);
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 500;
+    transition: box-shadow 0.2s ease, transform 0.1s ease;
+    background-color: var(--color-background-secondary); /* White background for buttons */
+    box-shadow: var(--shadow-sm); /* Using small shadow for raised effect */
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs); /* Using spacing variable */
+}
+
+.item-actions button:hover {
+    box-shadow: var(--shadow-md); /* Stronger shadow on hover */
+    transform: translateY(-1px); /* Slight lift on hover */
+    background-color: var(--color-background-hover); /* Subtle hover effect */
+}
+
+.item-actions button svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--color-text-primary);
+}
+
+.btn-edit {
+    color: var(--color-brand-main);
+}
+.btn-edit svg {
+    fill: var(--color-brand-main);
+}
+
+.btn-delete {
+    color: var(--color-danger);
+}
+.btn-delete svg {
+    fill: var(--color-danger);
+}
+
+.btn-success { /* For 'Mark Available' */
+    background-color: var(--color-success); /* Green background */
+    color: var(--color-text-on-accent); /* White text */
+    box-shadow: var(--shadow-sm); /* Using small shadow */
+    border: none; /* No border for solid colored buttons */
+}
+.btn-success:hover {
+    background-color: var(--color-brand-main); /* Change to brand main on hover or darker green */
+    box-shadow: var(--shadow-md);
+}
+.btn-danger { /* For 'Mark Unavailable' */
+    background-color: var(--color-danger); /* Red background */
+    color: var(--color-text-on-accent); /* White text */
+    box-shadow: var(--shadow-sm); /* Using small shadow */
+    border: none; /* No border for solid colored buttons */
+}
+.btn-danger:hover {
+    background-color: var(--color-brand-dark); /* Change to darker red on hover */
+    box-shadow: var(--shadow-md);
+}
+
+/* --- Modal Overlay & Content (for Edit/Add Modals) --- */
+.edit-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Darker overlay for better focus */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.edit-modal-content {
+    background-color: var(--color-background-secondary); /* White background */
+    padding: var(--spacing-lg); /* Using spacing variable */
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md); /* Using medium shadow */
+    width: 90%;
+    max-width: 500px;
+    animation: fadeInScale 0.3s ease-out;
+    color: var(--color-text-primary);
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.edit-modal-content h3 {
+    color: var(--color-text-primary);
+    margin-top: 0;
+    margin-bottom: var(--spacing-lg); /* Using spacing variable */
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: 700;
+}
+
+.edit-item-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md); /* Using spacing variable */
+}
+
+.edit-item-form input,
+.edit-item-form textarea,
+.edit-item-form select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md); /* Using spacing variables */
+    border: 1px solid var(--color-border-default); /* Added default border */
+    border-radius: var(--border-radius-md); /* Using medium radius */
+    box-sizing: border-box;
+    font-size: 0.95rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-background-primary); /* Use primary background for inputs */
+    box-shadow: var(--shadow-sm); /* Using small shadow for inset appearance */
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.edit-item-form input:focus,
+.edit-item-form textarea:focus,
+.edit-item-form select:focus {
+    border: 1px solid var(--color-brand-main);
+    outline: none;
+    box-shadow: var(--shadow-md); /* Stronger shadow on focus */
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm); /* Using spacing variable */
+    margin-top: var(--spacing-lg); /* Using spacing variable */
+}
+
+.modal-actions button {
+    padding: var(--spacing-sm) var(--spacing-md); /* Using spacing variables */
+    border: none;
+    border-radius: var(--border-radius-button);
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 600;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    background-color: var(--color-background-primary);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-text-primary);
+}
+
+.modal-actions button.submit {
+    background-color: var(--color-brand-main);
+    color: var(--color-text-on-accent);
+    box-shadow: var(--shadow-md); /* Using medium shadow */
+}
+
+.modal-actions button.submit:hover:not(:disabled) {
+    background-color: var(--color-brand-dark);
+    transform: translateY(-1px);
+}
+
+.modal-actions button.submit:disabled {
+    background-color: var(--color-brand-light);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.btn-cancel {
+    background-color: var(--color-background-primary);
+    color: var(--color-text-secondary);
+}
+
+/* --- Add Item Section (Right Column - 25% equivalent) --- */
+.add-item-section {
+    background-color: var(--color-background-secondary); /* White background */
+    padding: var(--spacing-lg); /* Using spacing variable */
+    border-radius: var(--border-radius-lg);
+    border: 1px solid var(--color-border-default); /* Added border */
+    box-shadow: var(--shadow-sm); /* Using small shadow */
+    z-index: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    height: fit-content;
+}
+
+.add-item-section h3 {
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-lg); /* Using spacing variable */
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.add-item-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md); /* Using spacing variable */
+    flex-grow: 1;
+}
+
+.add-item-form label {
+    display: block;
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xs); /* Using spacing variable */
+    font-weight: 500;
+}
+
+.add-item-form input,
+.add-item-form textarea,
+.add-item-form select {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md); /* Using spacing variables */
+    border: 1px solid var(--color-border-default); /* Added default border */
+    border-radius: var(--border-radius-md); /* Using medium radius */
+    box-sizing: border-box;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-background-primary); /* Use primary background for inputs */
+    box-shadow: var(--shadow-sm); /* Using small shadow for inset appearance */
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.add-item-form input:focus,
+.add-item-form textarea:focus,
+.add-item-form select:focus {
+    border: 1px solid var(--color-brand-main);
+    outline: none;
+    box-shadow: var(--shadow-md); /* Stronger shadow on focus */
+}
+
+.add-item-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm); /* Using spacing variable */
+    color: var(--color-text-primary);
+    font-size: 1em;
+    margin-top: var(--spacing-xs); /* Using spacing variable */
+}
+
+.checkbox-group input {
+    width: auto;
+    margin: 0;
+    accent-color: var(--color-brand-main);
+    transform: scale(1.1);
+}
+
+.add-item-form button.submit {
+    background-color: var(--color-brand-main);
+    color: var(--color-text-on-accent);
+    padding: var(--spacing-md) var(--spacing-lg); /* Using spacing variables */
+    border: none;
+    border-radius: var(--border-radius-button);
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-md); /* Using medium shadow */
+    margin-top: auto;
+}
+
+.add-item-form button.submit:hover:not(:disabled) {
+    background-color: var(--color-brand-dark);
+    transform: translateY(-1px);
+}
+
+.add-item-form button.submit:disabled {
+    background-color: var(--color-brand-light);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* --- Responsive adjustments --- */
+@media (max-width: 992px) { /* Tablet size, switch to stacked layout */
+    .menu-list-container {
+        grid-template-columns: 1fr; /* Single column layout for smaller screens */
+        gap: var(--spacing-lg); /* Using spacing variable */
+        padding: var(--spacing-md); /* Using spacing variable */
+        min-height: auto;
+    }
+
+    .menu-page-title {
+        position: static;
+        transform: none;
+        width: 100%;
+        text-align: center;
+        margin-bottom: var(--spacing-lg); /* Using spacing variable */
+    }
+
+    .add-item-section {
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        height: auto;
+        box-shadow: var(--shadow-sm); /* Using small shadow */
+        overflow-y: visible;
+    }
+
+    .menu-items-display {
+        width: 100%;
+        margin-right: 0;
+        padding-bottom: 0;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .menu-items-display h3 {
+        text-align: center;
+    }
+
+    .menu-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .menu-items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Adjusted minmax to fit smaller cards */
+    }
+
+    .item-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) { /* Mobile */
+    .menu-list-container {
+        padding: var(--spacing-sm); /* Using spacing variable */
+    }
+    .menu-items-display,
+    .add-item-section {
+        width: 100%;
+        padding: var(--spacing-md); /* Using spacing variable */
+    }
+    .menu-items-grid {
+        grid-template-columns: 1fr; /* Single column on smallest screens */
+    }
+    .menu-item-card {
+      width: 100%; /* Full width for very small screens */
+    }
+    .item-actions {
+        flex-direction: column;
+    }
+}

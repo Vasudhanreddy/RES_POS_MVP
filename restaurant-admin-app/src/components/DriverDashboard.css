@@ -1,0 +1,374 @@
+/* src/components/DriverDashboard.css */
+
+/* --- General Dashboard Layout --- */
+.driver-dashboard-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.page-title {
+    font-size: 2.2em;
+    color: #333;
+    text-align: center;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.page-description {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+.dashboard-section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    margin-bottom: 30px;
+    border-top: 5px solid #007bff; /* Primary brand color */
+}
+
+.dashboard-section h3 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.no-orders-message {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    padding: 20px;
+    border: 1px dashed #ddd;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* --- Order Card Grid --- */
+.order-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+/* --- Individual Order Card --- */
+.order-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-card.available {
+    border-left: 5px solid #28a745; /* Green for available */
+}
+
+.order-card.assigned {
+    border-left: 5px solid #007bff; /* Blue for assigned */
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.order-header h4 {
+    margin: 0;
+    font-size: 1.3em;
+    color: #333;
+}
+
+.order-tags-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: -5px; /* Adjust if needed for alignment with title */
+}
+
+.order-info {
+    flex-grow: 1; /* Allows info section to take up available space */
+    margin-bottom: 20px;
+}
+
+.order-info p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.order-info strong {
+    color: #333;
+}
+
+.address-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.address-link a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.address-link a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* --- Status Badges / Tags --- */
+.status-badge,
+.assignment-status-badge,
+.delivery-status-badge,
+.payment-tag {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Generic Status Colors */
+.status-badge.status-pending,
+.assignment-status-badge.status-pending { background-color: #ffc107; color: #333; } /* Yellow */
+.status-badge.status-accepted,
+.assignment-status-badge.status-accepted_by_driver { background-color: #28a745; } /* Green */
+.status-badge.status-preparing { background-color: #17a2b8; } /* Teal */
+.status-badge.status-assigned-for-delivery { background-color: #6f42c1; } /* Purple */
+.status-badge.status-picked-up,
+.delivery-status-badge.status-picked_up { background-color: #fd7e14; } /* Orange */
+.status-badge.status-on-the-way,
+.delivery-status-badge.status-on_the_way { background-color: #dc3545; } /* Red */
+.status-badge.status-delivered,
+.delivery-status-badge.status-delivered,
+.status-badge.status-completed { background-color: #007bff; } /* Blue */
+.status-badge.status-cancelled,
+.assignment-status-badge.status-rejected_by_driver { background-color: #6c757d; } /* Grey */
+.status-badge.status-refunded { background-color: #6610f2; } /* Indigo */
+
+/* Payment Tags */
+.payment-tag.tag-cod { background-color: #ff6a00; } /* Darker Orange for COD */
+.payment-tag.tag-cod-paid { background-color: #20c997; } /* Mint Green for COD Paid */
+
+
+/* --- Action Buttons --- */
+.order-actions-driver {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: auto; /* Push buttons to the bottom */
+    justify-content: flex-start; /* Align buttons to the start */
+}
+
+.action-button {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.action-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.action-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Specific Button Styles */
+.accept-button {
+    background-color: #28a745; /* Green */
+    color: white;
+}
+.accept-button:hover:not(:disabled) { background-color: #218838; }
+
+.reject-button {
+    background-color: #dc3545; /* Red */
+    color: white;
+}
+.reject-button:hover:not(:disabled) { background-color: #c82333; }
+
+.primary-action {
+    background-color: #007bff; /* Blue */
+    color: white;
+}
+.primary-action:hover:not(:disabled) { background-color: #0056b3; }
+
+.cod-button {
+    background-color: #ff8c00; /* Darker Orange */
+    color: white;
+}
+.cod-button:hover:not(:disabled) { background-color: #cc7000; }
+
+.complete-button {
+    background-color: #6f42c1; /* Purple */
+    color: white;
+}
+.complete-button:hover:not(:disabled) { background-color: #5a32a6; }
+
+.completed-message,
+.cancelled-message,
+.rejected-message {
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: center;
+    width: 100%; /* Take full width */
+}
+
+.completed-message { background-color: #e6ffe6; color: #28a745; }
+.cancelled-message, .rejected-message { background-color: #ffe6e6; color: #dc3545; }
+
+
+/* --- Loading & Error States --- */
+.driver-dashboard-container.loading-state,
+.driver-dashboard-container.error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    text-align: center;
+}
+
+.spinner-icon, .error-icon {
+    font-size: 3em;
+    color: #007bff;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+.error-icon {
+    color: #dc3545;
+    animation: none; /* No spin for error */
+}
+
+.loading-state p, .error-state p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .driver-dashboard-container {
+        padding: 15px;
+        margin: 15px auto;
+    }
+
+    .page-title {
+        font-size: 1.8em;
+    }
+
+    .page-description {
+        font-size: 1em;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-section {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-section h3 {
+        font-size: 1.5em;
+        margin-bottom: 15px;
+    }
+
+    .order-list-grid {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+        gap: 20px;
+    }
+
+    .order-card {
+        padding: 15px;
+    }
+
+    .order-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .order-tags-group {
+        width: 100%; /* Take full width below title */
+        justify-content: flex-start;
+    }
+
+    .order-actions-driver {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 8px;
+    }
+
+    .action-button {
+        width: 100%; /* Full width buttons */
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-title {
+        font-size: 1.5em;
+    }
+
+    .dashboard-section h3 {
+        font-size: 1.3em;
+    }
+
+    .status-badge,
+    .assignment-status-badge,
+    .delivery-status-badge,
+    .payment-tag {
+        font-size: 0.75em;
+        padding: 4px 8px;
+    }
+}

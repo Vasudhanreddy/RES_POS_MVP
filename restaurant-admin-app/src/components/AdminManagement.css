@@ -1,0 +1,683 @@
+/* restaurant-admin-app/src/components/AdminManagement.css */
+
+:root {
+    /* Assuming these are defined elsewhere or providing fallbacks for common variables */
+    --color-background-primary: #f8f9fa; /* Lighter background */
+    --color-background-secondary: #ffffff; /* White for cards */
+    --color-background-hover: #e9ecef; /* Light grey for hover states */
+    --color-text-primary: #343a40; /* Dark grey text */
+    --color-text-secondary: #6c757d; /* Medium grey text */
+    --color-text-light: #adb5bd; /* Light grey text */
+    --color-text-on-accent: #ffffff; /* White text on colored backgrounds */
+
+    --color-brand-main: #4a90e2; /* A modern blue */
+    --color-brand-dark: #357ABD; /* Darker blue for hover */
+    --color-brand-light: #e0f0ff; /* Light blue for subtle backgrounds */
+
+    --color-success: #28a745;
+    --color-success-light: #d4edda;
+    --color-danger: #dc3545;
+    --color-danger-light: #f8d7da;
+    --color-info: #17a2b8; /* For info badges */
+    --color-info-light: #d1ecf1;
+    --color-warning: #ffc107; /* For warning badges */
+    --color-warning-light: #fff3cd;
+
+
+    --color-role-admin: #007bff; /* Blue */
+    --color-role-admin-light: #cce5ff;
+    --color-role-super-admin: #6f42c1; /* Purple */
+    --color-role-super-admin-light: #e6d8f7;
+    --color-role-driver: #fd7e14; /* Orange */
+    --color-role-driver-light: #ffe4cc;
+    --color-role-customer: #6c757d; /* Grey */
+    --color-role-customer-light: #e2e6ea;
+
+
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-pill: 50px;
+    --border-radius-button: 8px;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.25);
+
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-xxl: 48px;
+
+    --font-family-base: 'Inter', sans-serif; /* Recommended modern font */
+}
+
+
+.admin-management-container {
+    padding: var(--spacing-xxl); /* Increased padding */
+    max-width: 1200px; /* Wider container */
+    margin: var(--spacing-xxl) auto; /* More margin */
+    background-color: var(--color-background-primary);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-xl); /* Stronger shadow for main container */
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+    text-align: center;
+    overflow: hidden; /* Ensures shadows/transforms are not cut off */
+    position: relative;
+}
+
+.admin-management-container.loading-state,
+.admin-management-container.error-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px; /* Taller loading/error state */
+}
+
+.admin-management-container .spinner-icon {
+    font-size: 4rem; /* Larger spinner */
+    color: var(--color-brand-main);
+    animation: spin 1.5s linear infinite;
+    margin-bottom: var(--spacing-lg);
+}
+
+.admin-management-container.error-state {
+    color: var(--color-danger);
+    font-weight: 700; /* Bolder error text */
+    padding: var(--spacing-xl);
+    border: 2px solid var(--color-danger);
+    border-radius: var(--border-radius-lg);
+    background-color: var(--color-danger-light);
+}
+.admin-management-container.error-state p {
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.1rem;
+}
+
+
+.page-title { /* Renamed from admin-management-title to match component */
+    font-size: 2.8rem; /* Larger title */
+    font-weight: 800; /* Extra bold */
+    color: var(--color-brand-main); /* Brand color for title */
+    margin-bottom: var(--spacing-md);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+.page-description {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xxl); /* More space below description */
+    line-height: 1.6;
+}
+
+.add-user-button { /* Renamed from create-admin-button */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background-image: linear-gradient(to right, var(--color-brand-main) 0%, #6dd5ed 100%); /* Subtle gradient */
+    color: var(--color-text-on-accent);
+    border: none;
+    border-radius: var(--border-radius-button);
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 1.1rem; /* Slightly larger text */
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out; /* Smoother transition */
+    box-shadow: var(--shadow-md); /* Enhanced shadow */
+    margin-bottom: var(--spacing-xl);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.add-user-button:hover {
+    background-image: linear-gradient(to right, #6dd5ed 0%, var(--color-brand-main) 100%); /* Reverse gradient on hover */
+    transform: translateY(-3px) scale(1.02); /* Lift and slightly enlarge */
+    box-shadow: var(--shadow-lg); /* Stronger shadow on hover */
+}
+
+.customer-info-message {
+    padding: var(--spacing-md);
+    background-color: var(--color-info-light);
+    color: var(--color-info);
+    border: 1px solid var(--color-info);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-xl);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+.no-users-message { /* Renamed from no-admins-message */
+    padding: var(--spacing-xxl);
+    background-color: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    color: var(--color-text-secondary);
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-md);
+    font-style: italic;
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+.user-list { /* Renamed from admin-list */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly wider min width */
+    gap: var(--spacing-lg); /* Space between cards */
+    margin-top: var(--spacing-xl);
+}
+
+.user-card { /* Renamed from admin-card */
+    background-color: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md); /* Consistent shadow for cards */
+    padding: var(--spacing-lg);
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-5px); /* Lift card on hover */
+    box-shadow: var(--shadow-lg); /* Stronger shadow on hover */
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px dashed var(--color-background-hover);
+}
+
+.user-icon {
+    font-size: 3rem; /* Larger user icon */
+    color: var(--color-brand-main);
+    flex-shrink: 0;
+}
+
+.user-details {
+    flex-grow: 1;
+}
+
+.user-name {
+    font-size: 1.5rem; /* Larger name */
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.2;
+}
+
+.user-details p {
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: 0.95rem;
+    color: var(--color-text-secondary); /* Less prominent text */
+}
+
+.user-details p:last-child {
+    margin-bottom: 0;
+}
+
+.user-details p svg {
+    color: var(--color-brand-main);
+    font-size: 1rem;
+}
+
+.user-role { /* Specific style for role line */
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+
+/* Enhanced Role Badges */
+.role-badge {
+    padding: 5px 12px;
+    border-radius: var(--border-radius-pill);
+    font-size: 0.85em;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    letter-spacing: 0.5px;
+    margin-left: var(--spacing-sm);
+    box-shadow: var(--shadow-sm);
+}
+
+.role-admin {
+    background-color: var(--color-role-admin-light);
+    color: var(--color-role-admin);
+}
+
+.role-super_admin {
+    background-color: var(--color-role-super-admin-light);
+    color: var(--color-role-super-admin);
+}
+
+.role-driver {
+    background-color: var(--color-role-driver-light);
+    color: var(--color-role-driver);
+}
+
+.role-customer, .role-N\/A { /* Handle default/unassigned roles */
+    background-color: var(--color-role-customer-light);
+    color: var(--color-role-customer);
+}
+
+.user-uid {
+    font-family: monospace; /* Monospace font for UIDs */
+    font-size: 0.85rem;
+    color: var(--color-text-light);
+    word-break: break-all; /* Ensures long UIDs wrap */
+}
+
+.audit-info {
+    font-size: 0.85rem; /* Slightly larger audit info */
+    color: var(--color-text-secondary); /* Better contrast */
+    margin-top: var(--spacing-md);
+    border-top: 1px dashed var(--color-border-default);
+    padding-top: var(--spacing-md);
+    line-height: 1.4;
+}
+
+.user-actions { /* Renamed from admin-card-actions */
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border-default);
+    justify-content: flex-end;
+}
+
+.action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 10px 18px; /* Larger buttons */
+    border-radius: var(--border-radius-button);
+    cursor: pointer;
+    font-size: 1rem; /* Clearer font size */
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    box-shadow: var(--shadow-sm);
+    background-color: var(--color-background-secondary);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border-default);
+    text-transform: capitalize;
+}
+
+.action-button:hover:not(:disabled) {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px); /* Lift button on hover */
+}
+
+.action-button svg {
+    font-size: 1.1rem; /* Slightly larger icons */
+}
+
+.edit-button {
+    color: var(--color-brand-main);
+    border-color: var(--color-brand-main);
+}
+
+.edit-button:hover:not(:disabled) {
+    background-color: var(--color-brand-light);
+    color: var(--color-brand-dark);
+}
+
+.delete-button {
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+}
+
+.delete-button:hover:not(:disabled) {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger);
+}
+
+.action-button:disabled {
+    opacity: 0.5; /* More visible disabled state */
+    cursor: not-allowed;
+    box-shadow: none;
+    background-color: var(--color-background-hover);
+    color: var(--color-text-light);
+}
+
+
+/* Modal Specific Styles (reused and enhanced) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75); /* Darker overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px); /* Subtle blur effect */
+}
+
+.modal-content {
+    background-color: var(--color-background-secondary);
+    padding: var(--spacing-xxl); /* Larger padding */
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-xl); /* Stronger shadow */
+    width: 95%; /* More width on larger screens */
+    max-width: 600px; /* Max width for readability */
+    position: relative;
+    animation: fadeInScale 0.3s ease-out;
+    border: 1px solid var(--color-border-default); /* Slight border */
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 20px; /* Adjusted position */
+    right: 20px; /* Adjusted position */
+    background: none;
+    border: none;
+    font-size: 2.5rem; /* Larger close button */
+    cursor: pointer;
+    color: var(--color-text-light); /* Lighter color */
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-close-button:hover {
+    color: var(--color-danger);
+    transform: rotate(90deg); /* Rotate on hover */
+}
+
+.modal-title {
+    font-size: 2.2rem; /* Larger modal title */
+    font-weight: 700;
+    color: var(--color-brand-main);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.modal-description {
+    font-size: 1rem; /* Slightly larger description */
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+    line-height: 1.6;
+}
+
+.user-form { /* Renamed from create-user-form */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.user-form .form-group {
+    text-align: left;
+    margin-bottom: var(--spacing-sm); /* Adjusted spacing */
+}
+
+.user-form .form-group label {
+    display: block;
+    font-size: 0.95rem; /* Slightly larger label */
+    color: var(--color-text-primary); /* Darker label for clarity */
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600; /* Bolder label */
+}
+
+.user-form input[type="email"],
+.user-form input[type="password"],
+.user-form input[type="text"],
+.user-form select { /* Added select for consistency */
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg); /* More padding */
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-md);
+    font-size: 1rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-background-primary);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); /* Inner shadow for input fields */
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.user-form input:focus,
+.user-form select:focus {
+    border-color: var(--color-brand-main);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.25); /* Focus ring effect */
+    outline: none;
+}
+
+.user-form .form-actions { /* Renamed from form-actions, ensuring it applies to modal form buttons */
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-md);
+    border-top: 1px dashed var(--color-border-default);
+}
+
+.user-form .submit-button,
+.user-form .cancel-button { /* General button styles for modal form */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 1.05rem;
+    font-weight: 600;
+    border-radius: var(--border-radius-button);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.user-form .submit-button {
+    background-image: linear-gradient(to right, var(--color-success) 0%, #34eb61 100%);
+    color: var(--color-text-on-accent);
+    border: none;
+}
+
+.user-form .submit-button:hover:not(:disabled) {
+    background-image: linear-gradient(to right, #34eb61 0%, var(--color-success) 100%);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.user-form .cancel-button {
+    background-color: var(--color-background-primary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-default);
+}
+
+.user-form .cancel-button:hover:not(:disabled) {
+    background-color: var(--color-background-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.user-form .submit-button:disabled,
+.user-form .cancel-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+    background-color: var(--color-background-hover);
+    color: var(--color-text-light);
+}
+
+.user-form .spinner {
+    font-size: 1.1rem;
+    animation: spin 1.5s linear infinite;
+}
+
+.form-message { /* Renamed from message */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    font-weight: 500;
+    font-size: 0.95rem;
+    justify-content: center;
+    text-align: left; /* Align message text */
+    line-height: 1.4;
+}
+
+.form-message.success {
+    background-color: var(--color-success-light);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+}
+
+.form-message.error {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger);
+    border: 1px solid var(--color-danger);
+}
+
+.form-message svg {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.form-help-text {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+  line-height: 1.3;
+}
+.form-help-text.error {
+    color: var(--color-danger);
+    font-weight: 500;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 992px) { /* Adjust for medium screens like tablets */
+    .admin-management-container {
+        padding: var(--spacing-xl);
+        margin: var(--spacing-xl) auto;
+        max-width: 90%;
+    }
+    .page-title {
+        font-size: 2.2rem;
+    }
+    .page-description {
+        font-size: 1rem;
+        margin-bottom: var(--spacing-xl);
+    }
+    .add-user-button {
+        font-size: 1rem;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    .user-list {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: var(--spacing-md);
+    }
+    .user-card {
+        padding: var(--spacing-md);
+    }
+    .user-name {
+        font-size: 1.3rem;
+    }
+    .user-icon {
+        font-size: 2.5rem;
+    }
+    .modal-content {
+        padding: var(--spacing-xl);
+    }
+    .modal-title {
+        font-size: 1.8rem;
+    }
+    .modal-close-button {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) { /* Adjust for small screens like mobile */
+    .admin-management-container {
+        padding: var(--spacing-md);
+        margin: var(--spacing-lg) auto;
+        max-width: 100%;
+        box-shadow: none; /* Remove shadow on very small screens for cleaner look */
+    }
+    .page-title {
+        font-size: 1.8rem;
+        margin-bottom: var(--spacing-md);
+    }
+    .page-description {
+        font-size: 0.9rem;
+        margin-bottom: var(--spacing-lg);
+    }
+    .add-user-button {
+        width: 100%; /* Full width button */
+        font-size: 1rem;
+        padding: var(--spacing-sm) var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+    .customer-info-message {
+        font-size: 0.85rem;
+    }
+    .user-list {
+        grid-template-columns: 1fr; /* Single column on mobile */
+        gap: var(--spacing-md);
+    }
+    .user-card {
+        padding: var(--spacing-md);
+    }
+    .user-name {
+        font-size: 1.2rem;
+    }
+    .user-icon {
+        font-size: 2rem;
+    }
+    .user-details p, .audit-info {
+        font-size: 0.85rem;
+    }
+    .action-button {
+        width: 100%;
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+    .user-actions {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    .modal-content {
+        padding: var(--spacing-lg);
+        max-width: 95%;
+    }
+    .modal-title {
+        font-size: 1.6rem;
+    }
+    .modal-close-button {
+        font-size: 1.8rem;
+        top: 10px;
+        right: 10px;
+    }
+    .modal-description {
+        font-size: 0.85rem;
+    }
+    .user-form input, .user-form select {
+        padding: var(--spacing-sm);
+        font-size: 0.95rem;
+    }
+    .user-form .submit-button, .user-form .cancel-button {
+        font-size: 0.95rem;
+        padding: var(--spacing-sm);
+    }
+    .form-message {
+        font-size: 0.85rem;
+        padding: var(--spacing-sm);
+    }
+}

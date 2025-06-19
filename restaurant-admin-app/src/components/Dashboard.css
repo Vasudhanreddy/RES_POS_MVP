@@ -1,0 +1,420 @@
+/* restaurant-admin-app/src/components/Dashboard.css */
+
+/*
+  IMPORTANT: Ensure your :root variables in src/styles/variables.css
+  are correctly defined and linked for these styles to work as intended.
+*/
+
+.dashboard-container {
+    padding: var(--spacing-lg); /* Base padding for the whole dashboard */
+    background-color: var(--color-background-primary); /* Main background color */
+    min-height: calc(100vh - 60px); /* Adjust based on header height */
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+}
+
+/* --- Analytics Overview Header --- */
+.analytics-overview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    padding: 0 var(--spacing-md); /* Match padding of main content area */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: var(--spacing-sm);
+}
+
+.analytics-overview-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.time-range-filters button {
+    background-color: transparent;
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+}
+
+.time-range-filters button:hover {
+    background-color: var(--color-background-hover);
+    color: var(--color-text-primary);
+}
+
+.time-range-filters button.active {
+    background-color: var(--color-brand-light);
+    color: var(--color-brand-main);
+    font-weight: 600;
+}
+
+/* --- Dashboard Metrics Grid --- */
+.dashboard-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid for metrics */
+    gap: var(--spacing-lg); /* Space between metric cards */
+    margin-bottom: var(--spacing-xl);
+    padding: 0 var(--spacing-md);
+}
+
+.metric-card {
+    background-color: var(--color-background-secondary); /* White background for metric cards */
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm); /* Subtle shadow */
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--color-border-default); /* Added for clarity */
+}
+
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.metric-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-secondary); /* Smaller, lighter text for header */
+    margin: 0;
+}
+
+.metric-icon {
+    font-size: 1.5rem;
+    color: var(--color-brand-main); /* Brand color for icons */
+}
+
+.metric-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: 1;
+}
+
+.metric-trend {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.trend.trend-positive {
+    color: var(--color-success);
+}
+
+.trend.trend-negative {
+    color: var(--color-danger);
+}
+
+.trend.trend-neutral {
+    color: var(--color-text-secondary);
+}
+
+/* --- Dashboard Chart Grid (These styles would be in DashboardCharts.css if it's a separate file) --- */
+.dashboard-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Charts grid */
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    padding: 0 var(--spacing-md);
+}
+
+.chart-card { /* Wrapper for individual charts */
+    background-color: var(--color-background-secondary); /* Changed back to secondary background for charts */
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border-default); /* Added for clarity */
+}
+
+.chart-card-header { /* For chart title and ellipsis menu */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.chart-card-header h3 {
+    text-align: left; /* Align to left within the card */
+    color: var(--color-text-primary);
+    font-size: 1.4rem;
+    margin: 0; /* Reset default margin */
+}
+
+.chart-card-menu-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease;
+}
+
+.chart-card-menu-icon:hover {
+    background-color: var(--color-background-hover);
+}
+
+
+/* --- Order Management Section within Dashboard (Kanban Layout) --- */
+.dashboard-order-management-section {
+    margin-top: var(--spacing-xl); /* Space above this section */
+    padding: 0 var(--spacing-md); /* Match padding of main content area */
+}
+
+.dashboard-order-management-section h2.section-title { /* Explicitly target this h2 */
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xl);
+}
+
+.order-columns-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns */
+    gap: var(--spacing-lg);
+    align-items: flex-start; /* Align columns to the top */
+}
+
+.order-column {
+    background-color: var(--color-background-secondary); /* Column background */
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    min-height: 300px; /* Minimum height for columns */
+    max-height: 600px; /* Max height to enable scrolling */
+    overflow-y: auto; /* <--- Changed to auto to enable scrolling directly on the column */
+    position: relative;
+}
+
+.order-column-header {
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-border-default);
+    text-align: center;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.order-column-header h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+/* Moved scrollbar styling to .order-column */
+.order-column::-webkit-scrollbar {
+    width: 6px;
+}
+
+.order-column::-webkit-scrollbar-thumb {
+    background-color: var(--color-border-default);
+    border-radius: 3px;
+}
+
+.order-column::-webkit-scrollbar-track {
+    background-color: var(--color-background-primary);
+}
+
+
+.order-list-scroll {
+    flex-grow: 1; /* Allow list to take remaining space */
+    /* overflow-y: auto;  Removed, as parent .order-column handles it now */
+    padding-right: 5px; /* Space for scrollbar, if needed for internal padding */
+}
+
+
+.order-card {
+    background-color: var(--color-background-primary); /* Card background */
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-xs); /* Smaller shadow for nested cards */
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    cursor: grab; /* Indicate draggable */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.order-card-id {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+}
+
+.order-status-badge {
+    padding: 3px 8px;
+    border-radius: var(--border-radius-pill);
+    font-size: 0.7em;
+    font-weight: bold;
+    color: var(--color-text-on-accent);
+    text-transform: capitalize;
+}
+
+/* Status badge specific colors (matching semantic colors) */
+.order-status-badge.status-pending { background-color: var(--color-warning); }
+.order-status-badge.status-preparing { background-color: var(--color-info); }
+.order-status-badge.status-ready-for-pickup,
+.order-status-badge.status-out-for-delivery { background-color: var(--color-brand-main); }
+.order-status-badge.status-completed { background-color: var(--color-success); }
+.order-status-badge.status-cancelled,
+.order-status-badge.status-refunded { background-color: var(--color-danger); }
+
+
+.order-card-body p {
+    margin: 4px 0;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+}
+
+.order-card-body p strong {
+    color: var(--color-text-primary);
+}
+
+.order-items-summary {
+    font-size: 0.75rem;
+    color: var(--color-text-light);
+    margin-top: var(--spacing-xs);
+    padding-top: var(--spacing-xs);
+    border-top: 1px dashed var(--color-border-default);
+}
+
+.order-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border-default);
+}
+
+.status-change-dropdown {
+    padding: 6px 10px;
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-button);
+    font-size: 0.8rem;
+    color: var(--color-text-primary);
+    background-color: var(--color-background-primary);
+    box-shadow: var(--shadow-sm);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236c757d'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 14px;
+    padding-right: 25px;
+    cursor: pointer;
+}
+
+.status-change-dropdown:focus {
+    border-color: var(--color-brand-main);
+    outline: none;
+    box-shadow: var(--shadow-md);
+}
+
+.status-change-dropdown:disabled {
+    background-color: var(--color-background-hover);
+    color: var(--color-text-light);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.small-spinner {
+    font-size: 1rem;
+    color: var(--color-brand-main);
+    animation: spin 1.5s linear infinite;
+}
+
+/* Loading and Error states */
+.dashboard-loading, .dashboard-error {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--color-text-secondary);
+    padding: 50px;
+}
+
+.dashboard-error {
+    color: var(--color-danger);
+}
+
+/* --- Responsive Adjustments --- */
+@media (min-width: 768px) {
+    .dashboard-container {
+        padding: var(--spacing-xl);
+    }
+    .analytics-overview-header,
+    .dashboard-metrics-grid,
+    .dashboard-charts-grid,
+    .dashboard-order-management-section {
+        padding: 0; /* Remove horizontal padding here as grid handles it */
+    }
+}
+
+@media (max-width: 767px) { /* Mobile specific adjustments */
+    .analytics-overview-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+    .time-range-filters {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .dashboard-metrics-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+    .dashboard-order-management-section h2.section-title {
+        font-size: 1.5rem;
+    }
+    .order-columns-container {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+    .order-column {
+        min-height: auto;
+        max-height: 400px; /* Restrict height for mobile columns to enable scrolling */
+        overflow-y: auto; /* Enable scrolling on mobile too */
+    }
+    .order-card {
+        margin-right: 0; /* Remove potential extra margin for mobile */
+    }
+    .transaction-card { /* Fallback if this class was used elsewhere */
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .transaction-details { /* Fallback if this class was used elsewhere */
+        width: 100%;
+        justify-content: space-between;
+        margin-top: var(--spacing-xs);
+    }
+}
+
+@media (min-width: 1200px) {
+    .dashboard-container {
+        max-width: 1600px; /* Max width for large screens */
+        margin: 0 auto; /* Center the dashboard */
+    }
+}

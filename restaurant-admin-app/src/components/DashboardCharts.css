@@ -1,0 +1,190 @@
+/* restaurant-admin-app/src/components/Dashboard.css */
+
+/*
+  IMPORTANT: Ensure your :root variables in src/styles/variables.css
+  are correctly defined and linked for these styles to work as intended.
+*/
+
+.dashboard-container {
+    padding: var(--spacing-lg); /* Base padding for the whole dashboard */
+    background-color: var(--color-background-primary); /* Main background color */
+    min-height: calc(100vh - 60px); /* Adjust based on header height */
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+}
+
+/* --- Analytics Overview Header --- */
+.analytics-overview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    padding: 0 var(--spacing-md); /* Match padding of main content area */
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: var(--spacing-sm);
+}
+
+.analytics-overview-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.time-range-filters button {
+    background-color: transparent;
+    border: none;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+}
+
+.time-range-filters button:hover {
+    background-color: var(--color-background-hover);
+    color: var(--color-text-primary);
+}
+
+.time-range-filters button.active {
+    background-color: var(--color-brand-light);
+    color: var(--color-brand-main);
+    font-weight: 600;
+}
+
+/* --- Dashboard Metrics Grid --- */
+.dashboard-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid for metrics */
+    gap: var(--spacing-lg); /* Space between metric cards */
+    margin-bottom: var(--spacing-xl);
+    padding: 0 var(--spacing-md);
+}
+
+.metric-card {
+    background-color: var(--color-background-secondary); /* White background for metric cards */
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm); /* Subtle shadow */
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--color-border-default); /* Added for clarity */
+}
+
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.metric-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-secondary); /* Smaller, lighter text for header */
+    margin: 0;
+}
+
+.metric-icon {
+    font-size: 1.5rem;
+    color: var(--color-brand-main); /* Brand color for icons */
+}
+
+.metric-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: 1;
+}
+
+.metric-trend {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.trend.trend-positive {
+    color: var(--color-success);
+}
+
+.trend.trend-negative {
+    color: var(--color-danger);
+}
+
+.trend.trend-neutral {
+    color: var(--color-text-secondary);
+}
+
+/* --- Dashboard Chart Grid (These styles would be in DashboardCharts.css if it's a separate file) --- */
+.dashboard-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Charts grid */
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    padding: 0 var(--spacing-md);
+}
+
+.chart-card { /* Wrapper for individual charts */
+    background-color: var(--color-background-secondary);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border-default); /* Added for clarity */
+}
+
+.chart-card h3 {
+    text-align: center;
+    color: var(--color-text-primary);
+    font-size: 1.4rem;
+    margin-bottom: var(--spacing-md);
+}
+
+
+/* --- Order Management Section within Dashboard --- */
+.dashboard-order-management-section {
+    margin-top: var(--spacing-xl); /* Space above this section */
+    padding: 0 var(--spacing-md); /* Match padding of main content area */
+}
+
+.dashboard-order-management-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Loading and Error states */
+.dashboard-loading, .dashboard-error {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--color-text-secondary);
+    padding: 50px;
+}
+
+.dashboard-error {
+    color: var(--color-danger);
+}
+
+/* --- Responsive Adjustments --- */
+@media (min-width: 768px) {
+    .dashboard-container {
+        padding: var(--spacing-xl);
+    }
+    .analytics-overview-header,
+    .dashboard-metrics-grid,
+    .dashboard-charts-grid, /* Added */
+    .dashboard-order-management-section {
+        padding: 0; /* Remove horizontal padding here as grid handles it */
+    }
+}
+
+@media (min-width: 1200px) {
+    .dashboard-container {
+        max-width: 1600px; /* Max width for large screens */
+        margin: 0 auto; /* Center the dashboard */
+    }
+}

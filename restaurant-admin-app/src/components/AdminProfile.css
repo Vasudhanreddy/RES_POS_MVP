@@ -1,0 +1,645 @@
+/* restaurant-admin-app/src/components/AdminProfile.css */
+
+.admin-profile-container {
+    padding: var(--spacing-lg);
+    max-width: 800px;
+    margin: var(--spacing-xl) auto;
+    background-color: var(--color-background-primary);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md); /* Use a more prominent shadow for main section */
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+    text-align: center; /* Center content initially */
+  }
+  
+  .admin-profile-container.loading,
+  .admin-profile-container.error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+  }
+  
+  .admin-profile-container .spinner-icon {
+    font-size: 3rem;
+    color: var(--color-brand-main);
+    animation: spin 1.5s linear infinite;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .admin-profile-container.error {
+    color: var(--color-danger);
+    font-weight: 600;
+  }
+  
+  .admin-profile-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .profile-card {
+    background-color: var(--color-background-secondary); /* White background for the card */
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-sm); /* Lighter shadow for the internal card */
+    text-align: left; /* Align details to the left within the card */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg); /* Space between detail rows */
+    margin-bottom: var(--spacing-xl); /* Space between profile cards */
+  }
+  
+  .card-title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-sm);
+      border-bottom: 1px solid var(--color-border-default);
+  }
+  
+  .profile-detail {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px dashed var(--color-border-default);
+  }
+  
+  .profile-detail:last-child {
+    border-bottom: none; /* No border for the last item */
+    padding-bottom: 0;
+  }
+  
+  .profile-icon {
+    font-size: 1.8rem;
+    color: var(--color-brand-main);
+    flex-shrink: 0; /* Prevent icon from shrinking */
+  }
+  
+  .detail-content {
+    flex-grow: 1; /* Allow content to take available space */
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .detail-label {
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+  
+  .detail-value {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+  
+  .detail-value.role-badge {
+    background-color: var(--color-brand-light); /* Light background for role badge */
+    color: var(--color-brand-main); /* Brand color for role text */
+    padding: 5px 10px;
+    border-radius: var(--border-radius-pill); /* Pill shape */
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block; /* Ensure padding works */
+  }
+  
+  .edit-input {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-md);
+    font-size: 1.1em;
+    color: var(--color-text-primary);
+    background-color: var(--color-background-primary);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+    width: 100%; /* Fill available space */
+  }
+  
+  .edit-input:focus {
+    border-color: var(--color-brand-main);
+    box-shadow: var(--shadow-md);
+    outline: none;
+  }
+  
+  .action-button {
+    background-color: var(--color-background-secondary); /* White background for icon buttons */
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-button); /* Rounded button */
+    padding: 10px 15px; /* Adjust padding for icon button */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+    display: flex; /* For icon alignment */
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0; /* Prevent button from shrinking */
+  }
+  
+  .action-button svg {
+    font-size: 1.2rem;
+    color: var(--color-text-secondary); /* Default icon color */
+  }
+  
+  .action-button.edit-button:hover {
+    background-color: var(--color-background-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+  .action-button.edit-button svg {
+    color: var(--color-brand-main); /* Edit icon color */
+  }
+  
+  
+  .action-button.primary-action { /* Save button */
+    background-color: var(--color-success); /* Green for save */
+    color: var(--color-text-on-accent); /* White text */
+    border: none;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .action-button.primary-action:hover {
+    background-color: var(--color-success); /* Darker green on hover */
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+  }
+  .action-button.primary-action svg {
+    color: var(--color-text-on-accent); /* White icon */
+  }
+  
+  .action-button:disabled {
+    background-color: var(--color-background-hover);
+    color: var(--color-text-light);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .action-button:disabled svg {
+      color: var(--color-text-light);
+  }
+  
+  .action-button.cancel-button {
+    background-color: var(--color-background-primary);
+    color: var(--color-text-primary);
+  }
+  .action-button.cancel-button:hover {
+    background-color: var(--color-border-default);
+  }
+  .action-button.cancel-button svg {
+    color: var(--color-text-primary);
+  }
+  
+  
+  /* --- Restaurant Settings Card (NEW) --- */
+  .restaurant-settings-card {
+    margin-top: var(--spacing-xl); /* Space above this card */
+    /* Reusing .profile-card styles for common appearance */
+  }
+  
+  .settings-field-group {
+      margin-bottom: var(--spacing-md);
+      text-align: left;
+  }
+  
+  .settings-field-group label {
+      display: block;
+      font-size: 0.9em;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-xs);
+      font-weight: 500;
+  }
+  
+  .settings-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+      padding-top: var(--spacing-md);
+      border-top: 1px dashed var(--color-border-default);
+  }
+  
+  .error-message-inline {
+      color: var(--color-danger);
+      font-size: 0.85rem;
+      margin-top: var(--spacing-sm);
+      text-align: right;
+  }
+  
+  
+  /* --- Admin Options Section --- */
+  .admin-options-card {
+    background-color: var(--color-background-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+    text-align: left;
+  }
+  
+  .options-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border-default);
+  }
+  
+  .admin-option-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    width: 100%;
+    background-color: var(--color-brand-main);
+    color: var(--color-text-on-accent);
+    border: none;
+    border-radius: var(--border-radius-button);
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .admin-option-button:hover {
+    background-color: var(--color-brand-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .admin-option-button .option-icon {
+    font-size: 1.5rem;
+    color: var(--color-text-on-accent);
+  }
+  
+  /* --- Styles for Integrated Address Input --- */
+  .restaurant-address-section {
+      padding-top: var(--spacing-lg);
+      margin-top: var(--spacing-lg);
+      border-top: 1px dashed var(--color-border-default);
+      text-align: left; /* Ensure inputs align left */
+  }
+  
+  .restaurant-address-section .address-section-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-brand-main);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    justify-content: center; /* Center the title */
+  }
+  
+  .restaurant-address-section .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .restaurant-address-section .form-group label {
+    display: block;
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+  }
+  
+  .restaurant-address-section .edit-input {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--border-radius-md);
+    font-size: 1em; /* Adjusted for consistency with other inputs */
+    color: var(--color-text-primary);
+    background-color: var(--color-background-primary);
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .restaurant-address-section .edit-input:focus {
+    border-color: var(--color-brand-main);
+    outline: none;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .restaurant-address-section textarea.edit-input {
+      resize: vertical;
+      min-height: 60px;
+  }
+  
+  .use-location-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    width: 100%;
+    background-color: var(--color-brand-main);
+    color: var(--color-text-on-accent);
+    border: none;
+    border-radius: var(--border-radius-button);
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: var(--shadow-md);
+    margin-top: var(--spacing-lg);
+  }
+  
+  .use-location-btn:hover:not(:disabled) {
+    background-color: var(--color-brand-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .use-location-btn:disabled {
+    background-color: var(--color-background-hover);
+    color: var(--color-text-light);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  
+  .use-location-btn .spinner-icon {
+    font-size: 1.2rem;
+    animation: spin 1.5s linear infinite;
+    color: var(--color-text-on-accent);
+  }
+  
+  .location-error {
+    color: var(--color-danger);
+    font-size: 0.9rem;
+    margin-top: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .location-error svg {
+    font-size: 1.1rem;
+  }
+  
+  
+  /* --- Styles for CreateAdminModal (previously CreateDriverModal) --- */
+  .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7); /* Darker, more opaque background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+  }
+  
+  .modal-content {
+      background-color: var(--color-background-secondary); /* White background */
+      padding: var(--spacing-xl); /* Generous padding */
+      border-radius: var(--border-radius-lg);
+      box-shadow: var(--shadow-lg); /* Prominent shadow */
+      width: 90%;
+      max-width: 500px;
+      position: relative; /* For the close button */
+      animation: fadeInScale 0.3s ease-out; /* Smooth entrance animation */
+  }
+  
+  @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+  }
+  
+  .modal-close-button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 2rem; /* Larger close icon */
+      cursor: pointer;
+      color: var(--color-text-secondary);
+      transition: color 0.2s ease;
+  }
+  
+  .modal-close-button:hover {
+      color: var(--color-danger); /* Red on hover */
+  }
+  
+  .modal-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--color-brand-main); /* Brand color for title */
+      margin-bottom: var(--spacing-lg);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-md);
+  }
+  
+  .modal-description {
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-xl);
+      text-align: center;
+      line-height: 1.5;
+  }
+  
+  .create-user-form { /* Renamed from create-driver-form */
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+  }
+  
+  .create-user-form .form-group {
+      text-align: left;
+  }
+  
+  .create-user-form .form-group label {
+      display: block;
+      font-size: 0.9em;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-xs);
+      font-weight: 500;
+  }
+  
+  .create-user-form input[type="email"],
+  .create-user-form input[type="password"],
+  .create-user-form input[type="text"] {
+      width: 100%;
+      padding: var(--spacing-md);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--border-radius-md);
+      font-size: 1rem;
+      color: var(--color-text-primary);
+      background-color: var(--color-background-primary); /* Use primary background for inputs */
+      box-shadow: var(--shadow-sm); /* Inset effect */
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+  }
+  
+  .create-user-form input:focus {
+      border-color: var(--color-brand-main);
+      box-shadow: var(--shadow-md);
+      outline: none;
+  }
+  
+  .create-user-form .submit-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-md);
+      width: 100%;
+      background-color: var(--color-brand-main);
+      color: var(--color-text-on-accent);
+      border: none;
+      border-radius: var(--border-radius-button);
+      padding: var(--spacing-md) var(--spacing-lg);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: var(--shadow-md);
+      margin-top: var(--spacing-lg);
+  }
+  
+  .create-user-form .submit-button:hover {
+      background-color: var(--color-brand-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+  }
+  
+  .create-user-form .submit-button:disabled {
+      background-color: var(--color-background-hover);
+      color: var(--color-text-light);
+      cursor: not-allowed;
+      box-shadow: none;
+  }
+  
+  .create-user-form .spinner {
+      font-size: 1.2rem;
+      animation: spin 1.5s linear infinite;
+  }
+  
+  .message {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-lg);
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius-md);
+      font-weight: 500;
+      font-size: 0.95rem;
+      justify-content: center;
+  }
+  
+  .message.success {
+      background-color: var(--color-success-light);
+      color: var(--color-success);
+      border: 1px solid var(--color-success);
+  }
+  
+  .message.error {
+      background-color: var(--color-danger-light);
+      color: var(--color-danger);
+      border: 1px solid var(--color-danger);
+  }
+  
+  .message svg {
+      font-size: 1.2rem;
+  }
+  
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .admin-profile-container {
+      padding: var(--spacing-md);
+      margin: var(--spacing-lg) auto;
+    }
+    .admin-profile-title {
+      font-size: 1.8rem;
+    }
+    .profile-card {
+      padding: var(--spacing-md);
+      gap: var(--spacing-md);
+    }
+    .profile-icon {
+      font-size: 1.5rem;
+    }
+    .detail-label, .detail-value, .edit-input {
+      font-size: 0.9em;
+    }
+    .action-button {
+      padding: 8px 12px;
+    }
+    .action-button svg {
+      font-size: 1rem;
+    }
+  
+    .admin-options-card {
+      padding: var(--spacing-md);
+      margin-top: var(--spacing-lg);
+    }
+    .options-title {
+      font-size: 1.4rem;
+    }
+    .admin-option-button {
+      font-size: 1rem;
+      padding: var(--spacing-sm) var(--spacing-md);
+    }
+    .admin-option-button .option-icon {
+      font-size: 1.2rem;
+    }
+    /* Responsive for integrated address section */
+    .restaurant-address-section .address-section-title {
+      font-size: 1.2rem;
+    }
+    .use-location-btn {
+      font-size: 1rem;
+      padding: var(--spacing-sm) var(--spacing-md);
+    }
+  
+    /* Responsive for CreateAdminModal */
+    .modal-content {
+      padding: var(--spacing-lg);
+    }
+    .modal-close-button {
+      font-size: 1.5rem;
+      top: 10px;
+      right: 10px;
+    }
+    .modal-title {
+      font-size: 1.5rem;
+    }
+    .modal-description {
+      font-size: 0.85rem;
+    }
+    .create-user-form input {
+      padding: var(--spacing-sm);
+      font-size: 0.9rem;
+    }
+    .create-user-form .submit-button {
+      font-size: 1rem;
+      padding: var(--spacing-sm);
+    }
+    .message {
+      font-size: 0.8rem;
+      padding: var(--spacing-sm);
+    }
+  }
+  
