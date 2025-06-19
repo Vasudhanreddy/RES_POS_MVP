@@ -7,64 +7,79 @@ import OrdersManagement from './OrdersManagement';
 import SalesOverviewChart from './SalesOverviewChart';
 import { FaEllipsisV } from 'react-icons/fa';
 
-// Dashboard now accepts 'db', 'userRole', and 'userUID' as props
-const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED userRole, userUID HERE
+// --- Helper functions for date calculations (MOVED OUTSIDE COMPONENT) ---
+const getStartOfDay = (date) => {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+    return d;
+};
+const getEndOfDay = (date) => {
+    const d = new Date(date);
+    d.setHours(23, 59, 59, 999);
+    return d;
+};
+const getStartOfPreviousDay = (date) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() - 1);
+    d.setHours(0, 0, 0, 0);
+    return d;
+};
+const getEndOfPreviousDay = (date) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() - 1);
+    d.setHours(23, 59, 59, 999);
+    return d;
+};
+const getStartOfWeek = (date) => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Sunday being 0 (start of week Mon)
+    d.setDate(diff);
+    d.setHours(0, 0, 0, 0);
+    return d;
+};
+const getStartOfLastWeek = (date) => {
+    const d = getStartOfWeek(date);
+    d.setDate(d.getDate() - 7);
+    return d;
+};
+const getStartOfMonth = (date) => {
+    const d = new Date(date.getFullYear(), date.getMonth(), 1, 0, 0, 0, 0);
+    return d;
+};
+const getStartOfLastMonth = (date) => {
+    const d = new Date(date.getFullYear(), date.getMonth() - 1, 1, 0, 0, 0, 0);
+    return d;
+};
+const getStartOfYear = (date) => {
+    const d = new Date(date.getFullYear(), 0, 1, 0, 0, 0, 0);
+    return d;
+};
+const getStartOfLastYear = (date) => {
+    const d = new Date(date.getFullYear() - 1, 0, 1, 0, 0, 0, 0);
+    return d;
+};
+const getStartTime = (date, hoursAgo) => {
+    const d = new Date(date);
+    d.setHours(d.getHours() - hoursAgo);
+    d.setMinutes(0, 0, 0);
+    return d;
+};
+
+const Dashboard = ({ restaurantID, db, userRole, userUID }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [dashboardMetrics, setDashboardMetrics] = useState({
-        todaysOrders: 0,
-        todaysOrdersChange: 0,
-        totalRevenue: 0,
-        totalRevenueChange: 0,
-        averageOrder: 0,
-        averageOrderChange: 0,
-        activeCustomers: 0,
-        activeCustomersChange: 0,
+        currentPeriodOrders: 0,
+        currentPeriodOrdersChange: 0,
+        currentPeriodRevenue: 0,
+        currentPeriodRevenueChange: 0,
+        currentPeriodAverageOrder: 0,
+        currentPeriodAverageOrderChange: 0,
+        activeCustomers: 0, // This metric will remain fixed to "last hour"
+        activeCustomersChange: 0, // This metric will remain fixed to "last hour"
     });
-    const [analyticsTimeRange, setAnalyticsTimeRange] = useState('Today');
-
-    // --- Helper functions for date calculations ---
-    const getStartOfDay = (date) => {
-        const d = new Date(date);
-        d.setHours(0, 0, 0, 0);
-        return d;
-    };
-    const getEndOfDay = (date) => {
-        const d = new Date(date);
-        d.setHours(23, 59, 59, 999);
-        return d;
-    };
-    const getStartOfPreviousDay = (date) => {
-        const d = new Date(date);
-        d.setDate(d.getDate() - 1);
-        d.setHours(0, 0, 0, 0);
-        return d;
-    };
-    const getEndOfPreviousDay = (date) => {
-        const d = new Date(date);
-        d.setDate(d.getDate() - 1);
-        d.setHours(23, 59, 59, 999);
-        return d;
-    };
-    const getStartOfWeek = (date) => {
-        const d = new Date(date);
-        const day = d.getDay();
-        const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-        d.setDate(diff);
-        d.setHours(0, 0, 0, 0);
-        return d;
-    };
-    const getStartOfLastWeek = (date) => {
-        const d = getStartOfWeek(date);
-        d.setDate(d.getDate() - 7);
-        return d;
-    };
-    const getStartTime = (date, hoursAgo) => {
-        const d = new Date(date);
-        d.setHours(d.getHours() - hoursAgo);
-        d.setMinutes(0, 0, 0);
-        return d;
-    };
+    const [analyticsTimeRange, setAnalyticsTimeRange] = useState('Today'); // Default to 'Today'
 
     // --- Data Fetching and Metrics Calculation ---
     useEffect(() => {
@@ -84,22 +99,62 @@ const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED u
             setLoading(true);
             setError(null);
             try {
-                const today = new Date();
-                const startOfToday = getStartOfDay(today);
-                const endOfToday = getEndOfDay(today);
-                const startOfYesterday = getStartOfPreviousDay(today);
-                const endOfYesterday = getEndOfPreviousDay(today);
-                const startOfThisWeek = getStartOfWeek(today);
-                const startOfLastWeekCompare = getStartOfLastWeek(today);
+                const today = new Date(); // Use a consistent 'today' for all relative calculations
+
+                let currentPeriodStart, currentPeriodEnd;
+                let previousPeriodStart, previousPeriodEnd; // For comparison
+
+                // Determine dynamic periods based on analyticsTimeRange
+                switch (analyticsTimeRange) {
+                    case 'Today':
+                        currentPeriodStart = getStartOfDay(today);
+                        currentPeriodEnd = getEndOfDay(today);
+                        previousPeriodStart = getStartOfPreviousDay(today);
+                        previousPeriodEnd = getEndOfPreviousDay(today);
+                        break;
+                    case 'Week':
+                        currentPeriodStart = getStartOfWeek(today);
+                        currentPeriodEnd = getEndOfDay(today); // Up to current moment of today
+                        previousPeriodStart = getStartOfLastWeek(today);
+                        previousPeriodEnd = getStartOfWeek(today); // End of last week is start of this week
+                        break;
+                    case 'Month':
+                        currentPeriodStart = getStartOfMonth(today);
+                        currentPeriodEnd = getEndOfDay(today); // Up to current moment of today
+                        previousPeriodStart = getStartOfLastMonth(today);
+                        previousPeriodEnd = getStartOfMonth(today); // End of last month is start of this month
+                        break;
+                    case 'Year':
+                        currentPeriodStart = getStartOfYear(today);
+                        currentPeriodEnd = getEndOfDay(today); // Up to current moment of today
+                        previousPeriodStart = getStartOfLastYear(today);
+                        previousPeriodEnd = getStartOfYear(today); // End of last year is start of this year
+                        break;
+                    default: // Fallback to 'Today' if an unknown range is somehow set
+                        currentPeriodStart = getStartOfDay(today);
+                        currentPeriodEnd = getEndOfDay(today);
+                        previousPeriodStart = getStartOfPreviousDay(today);
+                        previousPeriodEnd = getEndOfPreviousDay(today);
+                        break;
+                }
+
+                // For 'Active Customers', we still need data from the last two hours regardless of `analyticsTimeRange`.
                 const oneHourAgo = getStartTime(today, 1);
                 const twoHoursAgo = getStartTime(today, 2);
 
-                const thirtyDaysAgo = new Date();
-                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                // Determine the earliest date we need to fetch from Firestore
+                // This will be the earliest of (previousPeriodStart, twoHoursAgo)
+                const earliestDateNeeded = new Date(
+                    Math.min(
+                        currentPeriodStart.getTime(),
+                        previousPeriodStart.getTime(),
+                        twoHoursAgo.getTime() // Ensure we fetch enough for active customers
+                    )
+                );
 
                 const ordersQuery = query(
                     collection(db, 'resturent', restaurantID, 'orders'),
-                    where('createdAt', '>=', Timestamp.fromDate(thirtyDaysAgo)),
+                    where('createdAt', '>=', Timestamp.fromDate(earliestDateNeeded)),
                     orderBy('createdAt', 'desc')
                 );
 
@@ -110,34 +165,51 @@ const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED u
                     createdAt: doc.data().createdAt?.toDate(),
                 }));
 
-                let todaysOrdersCount = 0;
-                let yesterdayOrdersCount = 0;
-                let thisWeekRevenue = 0;
-                let lastWeekRevenue = 0;
-                let thisWeekOrderCount = 0;
-                let lastWeekOrderCount = 0;
+                // --- Filter orders into relevant periods ---
+                const currentPeriodOrders = allFetchedOrders.filter(order =>
+                    order.createdAt && order.createdAt >= currentPeriodStart && order.createdAt <= currentPeriodEnd
+                );
+
+                const previousPeriodOrders = allFetchedOrders.filter(order =>
+                    order.createdAt && order.createdAt >= previousPeriodStart && order.createdAt < previousPeriodEnd
+                );
+
+                // --- Calculate Metrics for Current Period ---
+                const currentOrdersCount = currentPeriodOrders.length;
+                const currentRevenue = currentPeriodOrders
+                    .filter(o => o.orderStatus === 'completed' && typeof o.totalAmount === 'number')
+                    .reduce((sum, o) => sum + o.totalAmount, 0);
+                const currentOrderCountForAvg = currentPeriodOrders
+                    .filter(o => o.orderStatus === 'completed' && typeof o.totalAmount === 'number').length;
+                const currentAverageOrder = currentOrderCountForAvg > 0 ? currentRevenue / currentOrderCountForAvg : 0;
+
+                // --- Calculate Metrics for Previous Period (for comparison) ---
+                const prevOrdersCount = previousPeriodOrders.length;
+                const prevRevenue = previousPeriodOrders
+                    .filter(o => o.orderStatus === 'completed' && typeof o.totalAmount === 'number')
+                    .reduce((sum, o) => sum + o.totalAmount, 0);
+                const prevOrderCountForAvg = previousPeriodOrders
+                    .filter(o => o.orderStatus === 'completed' && typeof o.totalAmount === 'number').length;
+                const prevAverageOrder = prevOrderCountForAvg > 0 ? prevRevenue / prevOrderCountForAvg : 0;
+
+                // --- Calculate Changes ---
+                const ordersChange = prevOrdersCount > 0
+                    ? ((currentOrdersCount - prevOrdersCount) / prevOrdersCount) * 100
+                    : (currentOrdersCount > 0 ? 100 : 0);
+
+                const revenueChange = prevRevenue > 0
+                    ? ((currentRevenue - prevRevenue) / prevRevenue) * 100
+                    : (currentRevenue > 0 ? 100 : 0);
+
+                const averageOrderChange = prevAverageOrder > 0
+                    ? ((currentAverageOrder - prevAverageOrder) / prevAverageOrder) * 100
+                    : (currentAverageOrder > 0 ? 100 : 0);
+
+                // --- Active Customers (remains based on last hour) ---
                 const activeCustomersThisHour = new Set();
                 const activeCustomersLastHour = new Set();
-
                 allFetchedOrders.forEach(order => {
                     if (order.createdAt) {
-                        if (order.createdAt >= startOfToday && order.createdAt <= endOfToday) {
-                            todaysOrdersCount++;
-                        }
-                        if (order.createdAt >= startOfYesterday && order.createdAt <= endOfYesterday) {
-                            yesterdayOrdersCount++;
-                        }
-
-                        if (order.orderStatus === 'completed' && order.totalAmount) {
-                            if (order.createdAt >= startOfThisWeek) {
-                                thisWeekRevenue += order.totalAmount;
-                                thisWeekOrderCount++;
-                            } else if (order.createdAt >= startOfLastWeekCompare && order.createdAt < startOfThisWeek) {
-                                lastWeekRevenue += order.totalAmount;
-                                lastWeekOrderCount++;
-                            }
-                        }
-
                         if (order.createdAt >= oneHourAgo && order.customerEmail) {
                             activeCustomersThisHour.add(order.customerEmail);
                         }
@@ -146,21 +218,6 @@ const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED u
                         }
                     }
                 });
-
-                const todaysOrdersChange = yesterdayOrdersCount > 0
-                    ? ((todaysOrdersCount - yesterdayOrdersCount) / yesterdayOrdersCount) * 100
-                    : (todaysOrdersCount > 0 ? 100 : 0);
-
-                const totalRevenueChange = lastWeekRevenue > 0
-                    ? ((thisWeekRevenue - lastWeekRevenue) / lastWeekRevenue) * 100
-                    : (thisWeekRevenue > 0 ? 100 : 0);
-
-                const averageOrderThisWeek = thisWeekOrderCount > 0 ? thisWeekRevenue / thisWeekOrderCount : 0;
-                const averageOrderLastWeek = lastWeekOrderCount > 0 ? lastWeekRevenue / lastWeekOrderCount : 0;
-                const averageOrderChange = averageOrderLastWeek > 0
-                    ? ((averageOrderThisWeek - averageOrderLastWeek) / averageOrderLastWeek) * 100
-                    : (averageOrderThisWeek > 0 ? 100 : 0);
-
                 const activeCustomersCurrentHourCount = activeCustomersThisHour.size;
                 const activeCustomersLastHourCount = activeCustomersLastHour.size;
                 const activeCustomersChange = activeCustomersLastHourCount > 0
@@ -168,12 +225,12 @@ const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED u
                     : (activeCustomersCurrentHourCount > 0 ? 100 : 0);
 
                 setDashboardMetrics({
-                    todaysOrders: todaysOrdersCount,
-                    todaysOrdersChange: parseFloat(todaysOrdersChange.toFixed(1)),
-                    totalRevenue: thisWeekRevenue,
-                    totalRevenueChange: parseFloat(totalRevenueChange.toFixed(1)),
-                    averageOrder: averageOrderThisWeek,
-                    averageOrderChange: parseFloat(averageOrderChange.toFixed(1)),
+                    currentPeriodOrders: currentOrdersCount,
+                    currentPeriodOrdersChange: parseFloat(ordersChange.toFixed(1)),
+                    currentPeriodRevenue: currentRevenue,
+                    currentPeriodRevenueChange: parseFloat(revenueChange.toFixed(1)),
+                    currentPeriodAverageOrder: currentAverageOrder,
+                    currentPeriodAverageOrderChange: parseFloat(averageOrderChange.toFixed(1)),
                     activeCustomers: activeCustomersCurrentHourCount,
                     activeCustomersChange: parseFloat(activeCustomersChange.toFixed(1)),
                 });
@@ -188,20 +245,10 @@ const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED u
 
         fetchDashboardData();
 
-    }, [
-        restaurantID,
-        db,
-        getStartOfDay,
-        getEndOfDay,
-        getStartOfPreviousDay,
-        getEndOfPreviousDay,
-        getStartOfWeek,
-        getStartOfLastWeek,
-        getStartTime
-    ]);
+    }, [restaurantID, db, analyticsTimeRange]); // <--- CRUCIAL: ADD analyticsTimeRange here
 
     const renderTrend = (value, unit = '%') => {
-        if (value === 0) return <span className="trend-neutral">0{unit}</span>;
+        if (isNaN(value) || value === 0) return <span className="trend-neutral">0{unit}</span>;
         const isPositive = value > 0;
         const trendClass = isPositive ? 'trend-positive' : 'trend-negative';
         const arrow = isPositive ? '▲' : '▼';
@@ -212,6 +259,39 @@ const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED u
         );
     };
 
+    const getPeriodLabel = (metricName) => {
+        const baseLabels = {
+            'orders': 'Orders',
+            'revenue': 'Revenue',
+            'averageOrder': 'Average Order',
+        };
+
+        const periodMap = {
+            'Today': 'Today\'s',
+            'Week': 'This Week\'s',
+            'Month': 'This Month\'s',
+            'Year': 'This Year\'s',
+        };
+
+        const comparisonMap = {
+            'Today': 'from yesterday',
+            'Week': 'from last week',
+            'Month': 'from last month',
+            'Year': 'from last year',
+        };
+
+        if (metricName === 'activeCustomers') {
+            return { title: 'Active Customers', comparison: 'from last hour' };
+        }
+
+        const baseMetric = metricName.replace('currentPeriod', '').toLowerCase(); // 'orders', 'revenue', etc.
+        const title = `${periodMap[analyticsTimeRange] || periodMap['Today']} ${baseLabels[baseMetric]}`;
+        const comparison = comparisonMap[analyticsTimeRange] || comparisonMap['Today'];
+
+        return { title, comparison };
+    };
+
+
     if (loading) {
         return <div className="dashboard-loading">Loading Dashboard...</div>;
     }
@@ -219,6 +299,12 @@ const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED u
     if (error) {
         return <div className="dashboard-error">{error}</div>;
     }
+
+    const ordersLabels = getPeriodLabel('currentPeriodOrders');
+    const revenueLabels = getPeriodLabel('currentPeriodRevenue');
+    const averageOrderLabels = getPeriodLabel('currentPeriodAverageOrder');
+    const activeCustomersLabels = getPeriodLabel('activeCustomers');
+
 
     return (
         <div className="dashboard-container">
@@ -240,38 +326,38 @@ const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED u
             <div className="dashboard-metrics-grid">
                 <div className="metric-card">
                     <div className="metric-header">
-                        <h3>Today's Orders</h3>
+                        <h3>{ordersLabels.title}</h3> {/* Dynamic Title */}
                         <span className="metric-icon">🍔</span>
                     </div>
-                    <p className="metric-value">{dashboardMetrics.todaysOrders}</p>
-                    <p className="metric-trend">{renderTrend(dashboardMetrics.todaysOrdersChange)} from yesterday</p>
+                    <p className="metric-value">{dashboardMetrics.currentPeriodOrders}</p>
+                    <p className="metric-trend">{renderTrend(dashboardMetrics.currentPeriodOrdersChange)} {ordersLabels.comparison}</p> {/* Dynamic Comparison */}
                 </div>
 
                 <div className="metric-card">
                     <div className="metric-header">
-                        <h3>Total Revenue</h3>
+                        <h3>{revenueLabels.title}</h3> {/* Dynamic Title */}
                         <span className="metric-icon">💰</span>
                     </div>
-                    <p className="metric-value">₹{dashboardMetrics.totalRevenue.toFixed(2)}</p>
-                    <p className="metric-trend">{renderTrend(dashboardMetrics.totalRevenueChange)} from last week</p>
+                    <p className="metric-value">₹{dashboardMetrics.currentPeriodRevenue.toFixed(2)}</p>
+                    <p className="metric-trend">{renderTrend(dashboardMetrics.currentPeriodRevenueChange)} {revenueLabels.comparison}</p> {/* Dynamic Comparison */}
                 </div>
 
                 <div className="metric-card">
                     <div className="metric-header">
-                        <h3>Average Order</h3>
+                        <h3>{averageOrderLabels.title}</h3> {/* Dynamic Title */}
                         <span className="metric-icon">🛒</span>
                     </div>
-                    <p className="metric-value">₹{dashboardMetrics.averageOrder.toFixed(2)}</p>
-                    <p className="metric-trend">{renderTrend(dashboardMetrics.averageOrderChange)} from last week</p>
+                    <p className="metric-value">₹{dashboardMetrics.currentPeriodAverageOrder.toFixed(2)}</p>
+                    <p className="metric-trend">{renderTrend(dashboardMetrics.currentPeriodAverageOrderChange)} {averageOrderLabels.comparison}</p> {/* Dynamic Comparison */}
                 </div>
 
                 <div className="metric-card">
                     <div className="metric-header">
-                        <h3>Active Customers</h3>
+                        <h3>{activeCustomersLabels.title}</h3>
                         <span className="metric-icon">🧑‍🤝‍🧑</span>
                     </div>
                     <p className="metric-value">{dashboardMetrics.activeCustomers}</p>
-                    <p className="metric-trend">{renderTrend(dashboardMetrics.activeCustomersChange)} from last hour</p>
+                    <p className="metric-trend">{renderTrend(dashboardMetrics.activeCustomersChange)} {activeCustomersLabels.comparison}</p>
                 </div>
             </div>
 
@@ -287,7 +373,7 @@ const Dashboard = ({ restaurantID, db, userRole, userUID }) => { // <--- ADDED u
 
             <div className="dashboard-order-management-section">
                 <h2 style={{marginTop: '40px', textAlign: 'center'}}>Order Management</h2>
-                <OrdersManagement restaurantID={restaurantID} db={db} userRole={userRole} userUID={userUID} /> {/* <--- PASSED userRole, userUID HERE */}
+                <OrdersManagement restaurantID={restaurantID} db={db} userRole={userRole} userUID={userUID} />
             </div>
         </div>
     );
